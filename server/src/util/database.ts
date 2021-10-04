@@ -1,5 +1,4 @@
 import { mongoose } from '@typegoose/typegoose';
-import { User, UserModel } from '../models/User';
 
 export const connectDatabase = async (uri: string) => {
   try {
@@ -9,7 +8,7 @@ export const connectDatabase = async (uri: string) => {
     // const user = await UserModel.findById(id).exec();
 
     // console.log(user);
-    console.log('db connection OK');
+    console.log(`\n👌 DB connection ok`);
   } catch (error) {
     console.log(error);
   }

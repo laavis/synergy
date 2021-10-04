@@ -1,3 +1,4 @@
+import { ApolloError, UserInputError } from 'apollo-server-errors';
 import { check, hash } from 'p4ssw0rd';
 import { TokenPairModel } from '../../models/Token';
 import { UserModel } from '../../models/User';
@@ -12,13 +13,14 @@ export const login = async (input: ILoginUserInput) => {
   const { email, password } = input;
   const user = await UserModel.findOne({ email });
 
-  if (!user) return 'nope';
+  if (!user) {
+    throw new ApolloError('Invalid credentials');
+  }
 
   const verifiedPassword = check(password, user.password);
 
   if (!verifiedPassword) {
-    console.log('!verifiedPassword');
-    return;
+    throw new UserInputError('Invalid credentials');
   }
 
   const accessToken = createAccessToken(user);

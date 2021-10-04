@@ -32,7 +32,7 @@ input InputCreateUser {
 }
 
 type Mutation {
-  createUser(input: InputCreateUser): User
-  loginUser(email: String!, password: String): Tokens
+  signup(input: InputCreateUser): User
+  login(email: String!, password: String): Tokens
   renewAccessToken(refreshToken: String!): String!
 }

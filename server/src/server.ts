@@ -1,4 +1,5 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import compression from 'compression';
@@ -12,11 +13,13 @@ import schema from './schema';
 import { connectDatabase } from './util/database';
 import { permissions } from './util/permissions';
 
+dotenv.config();
+
 const getUser = (accessToken: string) => {
   try {
-    return verify(accessToken, process.env.ACCESS_SECRET);
+    return verify(accessToken, process.env.ACCESS_SECRET || '');
   } catch (error) {
-    throw new Error('Session invalid');
+    throw new AuthenticationError('Session invalid');
   }
 };
 
@@ -27,12 +30,10 @@ const server = new ApolloServer({
   validationRules: [depthLimit(7)],
   context: ({ req }) => {
     const authorization = req.headers.authorization;
-
-    if (!authorization) return null;
+    if (!authorization) throw new AuthenticationError('Session invalid');
 
     const [_, accessToken] = authorization.split(' ');
-
-    if (!accessToken) return null;
+    if (!accessToken) throw new AuthenticationError('Session invalid');
 
     const user = getUser(accessToken);
     return { user };
@@ -40,7 +41,7 @@ const server = new ApolloServer({
 });
 
 (async () => {
-  await connectDatabase(process.env.MONGO_URI);
+  await connectDatabase(process.env.MONGO_URI || '');
   app.use(json());
   app.use(cors());
   app.use(compression());
@@ -50,5 +51,7 @@ const server = new ApolloServer({
   server.applyMiddleware({ app, path: '/graphql' });
 
   const httpServer = createServer(app);
-  httpServer.listen({ port: 3000 }, (): void => console.log(`\n🚀 GraphQL is now running on http://localhost:3000/graphql`));
+  httpServer.listen({ port: 3000 }, (): void =>
+    console.log(`\n🚀 GraphQL is now running on http://localhost:3000/graphql`)
+  );
 })();

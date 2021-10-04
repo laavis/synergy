@@ -1,7 +1,7 @@
 import { IResolvers } from '@graphql-tools/utils';
 
 import handlers from './handlers';
-import { ICreateUser } from './handlers/user/create';
+import { ICreateUser } from './handlers/user/signup';
 import { ILoginUserInput } from './handlers/user/login';
 
 import { UserModel } from './models/User';
@@ -9,7 +9,6 @@ import { UserModel } from './models/User';
 const resolverMap: IResolvers = {
   Query: {
     helloWorld(_: void, args: void, ctx): string {
-      console.log(ctx);
       return `👋 Hello world! 👋`;
     },
     async users(_: void, args: void, ctx) {
@@ -17,10 +16,11 @@ const resolverMap: IResolvers = {
     },
   },
   Mutation: {
-    async createUser(_, args: { input: ICreateUser }) {
-      return await handlers.user.create(args.input);
+    async signup(_, args: { input: ICreateUser }) {
+      return await handlers.user.signup(args.input);
     },
-    async loginUser(_: void, args: ILoginUserInput) {
+    async login(_: void, args: ILoginUserInput) {
+      console.log('login');
       return await handlers.user.login(args);
     },
     async renewAccessToken(_, args: { refreshToken: string }) {

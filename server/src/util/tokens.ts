@@ -7,9 +7,13 @@ import { IUser } from '../models/User';
 // Access
 export const createAccessToken = (user: IUser) => {
   const { _id, email } = user;
-  const accessToken = sign({ user: { _id, email } }, process.env.ACCESS_SECRET, {
-    expiresIn: '10m',
-  });
+  const accessToken = sign(
+    { user: { _id, email } },
+    process.env.ACCESS_SECRET ?? '',
+    {
+      expiresIn: '10m',
+    }
+  );
 
   return accessToken;
 };
@@ -18,18 +22,30 @@ export const createAccessToken = (user: IUser) => {
 // Refresh
 export const createRefreshToken = (user: IUser) => {
   const { _id, email } = user;
-  const refreshToken = sign({ user: { _id, email } }, process.env.REFRESH_SECRET, {
-    expiresIn: '7d',
-  });
+  const refreshToken = sign(
+    { user: { _id, email } },
+    process.env.REFRESH_SECRET ?? '',
+    {
+      expiresIn: '7d',
+    }
+  );
 
   return refreshToken;
 };
 
-export const saveTokens = async (accessToken: string, refreshToken: string, userId: string) => {
+export const saveTokens = async (
+  accessToken: string,
+  refreshToken: string,
+  userId: string
+) => {
   const hashedAccessToken = hash(accessToken);
   const hashedRefreshToken = hash(refreshToken);
 
-  await TokenPairModel.create({ accessToken: hashedAccessToken, refreshToken: hashedRefreshToken, userId });
+  await TokenPairModel.create({
+    accessToken: hashedAccessToken,
+    refreshToken: hashedRefreshToken,
+    userId,
+  });
 };
 
 export const generateAccessToken = (refreshToken: string) => {
@@ -40,17 +56,18 @@ export const generateAccessToken = (refreshToken: string) => {
   const hashedRefreshToken = hash(refreshToken);
 
   // query valid refresh token from db
-  const existingRefreshToken = TokenPairModel.findOne({ refreshToken: hashedRefreshToken });
+  const existingRefreshToken = TokenPairModel.findOne({
+    refreshToken: hashedRefreshToken,
+  });
 
   if (!existingRefreshToken) {
     console.log('no token in db');
     return;
   }
 
-  console.log(existingRefreshToken);
+  const payload = verify(refreshToken, process.env.REFRESH_SECRET ?? '');
 
-  const payload = verify(refreshToken, process.env.REFRESH_SECRET);
-  console.log(payload);
+  // todo idk finish this
 
   // return accessToken;
 };
