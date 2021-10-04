@@ -1,0 +1,38 @@
+type User {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+}
+
+type InputCreateUser {
+  email: String!
+  password: String!
+  rePassword: String!
+  firstName: String!
+  lastName: String!
+}
+
+type Query {
+  helloWorld: String!
+  users: [User]
+}
+
+type Tokens {
+  accessToken: String
+  refreshToken: String!
+}
+
+input InputCreateUser {
+  email: String!
+  password: String!
+  rePassword: String!
+  firstName: String!
+  lastName: String!
+}
+
+type Mutation {
+  createUser(input: InputCreateUser): User
+  loginUser(email: String!, password: String): Tokens
+  renewAccessToken(refreshToken: String!): String!
+}
