@@ -1,4 +1,5 @@
 import { prop, getModelForClass, mongoose } from '@typegoose/typegoose';
+import { Skill } from './Skill';
 
 export class User {
   @prop({ required: true })
@@ -12,6 +13,15 @@ export class User {
 
   @prop({ required: true })
   public lastName!: string;
+
+  public bio?: string;
+
+  public location?: {
+    country?: string;
+    city?: string;
+  };
+
+  public skills?: Skill[];
 }
 
 export interface IUser extends User {
