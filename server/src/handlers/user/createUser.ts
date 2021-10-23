@@ -10,16 +10,21 @@ export interface ICreateUser {
   lastName: string;
 }
 
-export const signup = async (args: ICreateUser) => {
-  const { email, password, rePassword, firstName, lastName } = args;
+export const create = async (input: ICreateUser) => {
+  console.log('skdhsd');
+  console.log(input);
+  const { email, password, rePassword, firstName, lastName } = input;
+
   const existingUser = await UserModel.findOne({ email });
 
   if (existingUser) {
-    throw new ApolloError('User already exists');
+    throw new ApolloError('User already exists', 'userExists');
   }
 
   if (password !== rePassword) {
-    throw new UserInputError('Passwords do not match')!;
+    throw new UserInputError('Passwords do not match', {
+      name: 'passwordsMismatch',
+    });
   }
 
   if (!firstName) {

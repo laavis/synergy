@@ -1,15 +1,17 @@
 import { verify, sign } from 'jsonwebtoken';
-import { hash } from 'p4ssw0rd';
 import { TokenPairModel } from '../models/Token';
-import { IUser } from '../models/User';
+import { IUser, UserModel } from '../models/User';
 
-//
-// Access
+export interface ITokenPayload {
+  _id: string;
+}
+
 export const createAccessToken = (user: IUser) => {
-  const { _id, email } = user;
+  const { _id } = user;
+
   const accessToken = sign(
-    { user: { _id, email } },
-    process.env.ACCESS_SECRET ?? '',
+    { user: { _id } },
+    process.env.ACCESS_SECRET as string,
     {
       expiresIn: '10m',
     }
@@ -18,13 +20,11 @@ export const createAccessToken = (user: IUser) => {
   return accessToken;
 };
 
-//
-// Refresh
 export const createRefreshToken = (user: IUser) => {
   const { _id, email } = user;
   const refreshToken = sign(
     { user: { _id, email } },
-    process.env.REFRESH_SECRET ?? '',
+    process.env.REFRESH_SECRET as string,
     {
       expiresIn: '7d',
     }
@@ -37,46 +37,29 @@ export const saveTokens = async (
   accessToken: string,
   refreshToken: string,
   userId: string
-) => {
-  const hashedAccessToken = hash(accessToken);
-  const hashedRefreshToken = hash(refreshToken);
-
+) =>
   await TokenPairModel.create({
-    accessToken: hashedAccessToken,
-    refreshToken: hashedRefreshToken,
+    accessToken,
+    refreshToken,
     userId,
   });
-};
 
-export const generateAccessToken = (refreshToken: string) => {
-  if (!refreshToken) {
-    console.log('no refresh token!');
-    return;
-  }
-  const hashedRefreshToken = hash(refreshToken);
-
-  // query valid refresh token from db
-  const existingRefreshToken = TokenPairModel.findOne({
-    refreshToken: hashedRefreshToken,
-  });
-
-  if (!existingRefreshToken) {
-    console.log('no token in db');
-    return;
-  }
-
-  const payload = verify(refreshToken, process.env.REFRESH_SECRET ?? '');
-
-  // todo idk finish this
-
-  // return accessToken;
-};
-
-export const validateToken = (token: string, secret: string) => {
+export const validateAccessToken = async (req: any) => {
   try {
-    return verify(token, secret);
+    if (!req.headers.authorization) return null;
+    const [_, accessToken] = req.headers.authorization.split(' ');
+    if (!accessToken) return null;
+
+    const payload = verify(accessToken, process.env.ACCESS_SECRET as string);
+
+    // @ts-ignore
+    const userId = payload.user._id;
+
+    const user = await UserModel.findById({ _id: userId });
+    return user;
   } catch (error) {
-    console.error(error);
+    // console.log(error);
+
     return null;
   }
 };

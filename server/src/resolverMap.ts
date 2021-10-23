@@ -1,7 +1,7 @@
 import { IResolvers } from '@graphql-tools/utils';
 
 import handlers from './handlers';
-import { ICreateUser } from './handlers/user/signup';
+import { ICreateUser } from './handlers/user/createUser';
 import { ILoginUserInput } from './handlers/user/login';
 
 import { UserModel } from './models/User';
@@ -14,17 +14,31 @@ const resolverMap: IResolvers = {
     async users(_: void, args: void, ctx) {
       return UserModel.find({});
     },
-  },
-  Mutation: {
-    async signup(_, args: { input: ICreateUser }) {
-      return await handlers.user.signup(args.input);
-    },
-    async login(_: void, args: ILoginUserInput) {
-      console.log('login');
-      return await handlers.user.login(args);
+    async me(_: void, args: void, ctx) {
+      return await handlers.user.me(ctx);
     },
     async renewAccessToken(_, args: { refreshToken: string }) {
-      return await handlers.accessToken.renew(args.refreshToken);
+      const access = await handlers.accessToken.renew(args.refreshToken);
+      return access;
+    },
+  },
+  Mutation: {
+    async createUser(
+      _,
+      args: {
+        email: string;
+        password: string;
+        rePassword: string;
+        firstName: string;
+        lastName: string;
+      }
+    ) {
+      console.log('resolverMap');
+      console.log(args);
+      return await handlers.user.create(args);
+    },
+    async login(_: void, args: ILoginUserInput) {
+      return await handlers.user.login(args);
     },
   },
 };

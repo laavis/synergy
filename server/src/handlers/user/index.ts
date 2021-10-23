@@ -1,7 +1,9 @@
-import { signup } from './signup';
+import { create } from './createUser';
 import { login } from './login';
+import { me } from './me';
 
 export default {
-  signup,
+  create,
   login,
+  me,
 };

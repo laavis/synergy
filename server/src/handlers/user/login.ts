@@ -29,12 +29,18 @@ export const login = async (input: ILoginUserInput) => {
   const updatedTokens = await TokenPairModel.findOneAndUpdate(
     { userId: user._id },
     {
-      accessToken: hash(accessToken),
-      refrshToken: hash(refreshToken),
+      accessToken,
+      refreshToken,
     }
   );
 
-  if (!updatedTokens) saveTokens(accessToken, refreshToken, user._id);
+  if (!updatedTokens) {
+    await TokenPairModel.create({
+      accessToken,
+      refreshToken,
+      userId: user._id,
+    });
+  }
 
   return {
     accessToken,

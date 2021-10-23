@@ -1,47 +1,33 @@
 import express from 'express';
-import dotenv from 'dotenv';
-import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import compression from 'compression';
+import dotenv from 'dotenv';
 import cors from 'cors';
 import { json } from 'body-parser';
 import { createServer } from 'http';
-import { verify } from 'jsonwebtoken';
 import { applyMiddleware } from 'graphql-middleware';
+import { ApolloServer } from 'apollo-server-express';
 
 import schema from './schema';
 import { connectDatabase } from './util/database';
-import { permissions } from './util/permissions';
+import { permissions, validateAccessToken } from './util';
 
 dotenv.config();
-
-const getUser = (accessToken: string) => {
-  try {
-    return verify(accessToken, process.env.ACCESS_SECRET || '');
-  } catch (error) {
-    throw new AuthenticationError('Session invalid');
-  }
-};
 
 const app = express();
 
 const server = new ApolloServer({
   schema: applyMiddleware(schema, permissions),
   validationRules: [depthLimit(7)],
-  context: ({ req }) => {
-    const authorization = req.headers.authorization;
-    if (!authorization) throw new AuthenticationError('Session invalid');
-
-    const [_, accessToken] = authorization.split(' ');
-    if (!accessToken) throw new AuthenticationError('Session invalid');
-
-    const user = getUser(accessToken);
-    return { user };
-  },
+  context: async ({ req, res }) => ({
+    req,
+    res,
+    user: await validateAccessToken(req),
+  }),
 });
 
 (async () => {
-  await connectDatabase(process.env.MONGO_URI || '');
+  await connectDatabase(process.env.MONGO_URI as string);
   app.use(json());
   app.use(cors());
   app.use(compression());
