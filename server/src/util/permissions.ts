@@ -11,4 +11,7 @@ export const permissions = shield({
   Query: {
     helloWorld: and(isAuthenticated),
   },
+  Mutation: {
+    updateUser: and(isAuthenticated),
+  },
 });

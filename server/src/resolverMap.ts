@@ -1,10 +1,11 @@
 import { IResolvers } from '@graphql-tools/utils';
 
 import handlers from './handlers';
-import { ICreateUser } from './handlers/user/createUser';
 import { ILoginUserInput } from './handlers/user/login';
+import { IUpdateUserInput, updateUser } from './handlers/user/updateUser';
 
 import { UserModel } from './models/User';
+import { IContext } from './types';
 
 const resolverMap: IResolvers = {
   Query: {
@@ -36,6 +37,9 @@ const resolverMap: IResolvers = {
       console.log('resolverMap');
       console.log(args);
       return await handlers.user.create(args);
+    },
+    async updateUser(_, args: { input: IUpdateUserInput }, ctx: IContext) {
+      return await updateUser(args.input, ctx);
     },
     async login(_: void, args: ILoginUserInput) {
       return await handlers.user.login(args);

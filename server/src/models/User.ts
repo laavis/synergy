@@ -1,7 +1,23 @@
-import { prop, getModelForClass, mongoose } from '@typegoose/typegoose';
+import {
+  prop,
+  getModelForClass,
+  mongoose,
+  modelOptions,
+} from '@typegoose/typegoose';
 import { Skill } from './Skill';
 
+class Location {
+  @prop({ required: false })
+  public city?: string;
+
+  @prop({ required: false })
+  public country?: string;
+}
+
+@modelOptions({ schemaOptions: { collection: 'users' } })
 export class User {
+  _id!: mongoose.Types.ObjectId;
+
   @prop({ required: true })
   public email!: string;
 
@@ -14,18 +30,16 @@ export class User {
   @prop({ required: true })
   public lastName!: string;
 
+  @prop()
   public bio?: string;
 
-  public location?: {
-    country?: string;
-    city?: string;
-  };
+  @prop()
+  public location?: Location;
 
+  @prop()
   public skills?: Skill[];
 }
 
-export interface IUser extends User {
-  _id: mongoose.Types.ObjectId;
-}
+export interface IUser extends User {}
 
 export const UserModel = getModelForClass(User);

@@ -1,5 +1,11 @@
-import { prop, getModelForClass, mongoose } from '@typegoose/typegoose';
+import {
+  prop,
+  getModelForClass,
+  mongoose,
+  modelOptions,
+} from '@typegoose/typegoose';
 
+@modelOptions({ schemaOptions: { collection: 'tokens' } })
 export class TokenPair {
   @prop({ required: true })
   public accessToken!: string;

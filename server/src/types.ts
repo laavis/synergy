@@ -19,3 +19,5 @@ export enum ESkillType {
   DEVOPS = 'devops',
   OTHER = 'other',
 }
+
+export type TSkillLevel = 1 | 2 | 3 | 4 | 5;

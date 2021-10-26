@@ -21,7 +21,7 @@ export const skillTypeDefs = gql`
     # E.g. programming, UI design, UX design
     type: String
     # When type is programming, language must be given
-    language: String
+    name: String
     # Self-rated skill level ranging from 1-5
     level: Int!
     # Description of the skill

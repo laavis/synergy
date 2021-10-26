@@ -13,7 +13,5 @@ export const me = async (ctx: IContext) => {
     email: ctx.user.email,
   };
 
-  console.log('user', user.email);
-
   return user;
 };

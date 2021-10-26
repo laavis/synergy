@@ -13,7 +13,7 @@ export const createAccessToken = (user: IUser) => {
     { user: { _id } },
     process.env.ACCESS_SECRET as string,
     {
-      expiresIn: '10m',
+      expiresIn: '1d',
     }
   );
 
@@ -58,7 +58,7 @@ export const validateAccessToken = async (req: any) => {
     const user = await UserModel.findById({ _id: userId });
     return user;
   } catch (error) {
-    // console.log(error);
+    console.log(error);
 
     return null;
   }
