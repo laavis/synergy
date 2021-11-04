@@ -10,8 +10,11 @@ const isAuthenticated = rule({ cache: 'contextual' })(
 export const permissions = shield({
   Query: {
     helloWorld: and(isAuthenticated),
+    projects: and(isAuthenticated),
+    user: and(isAuthenticated),
   },
   Mutation: {
     updateUser: and(isAuthenticated),
+    createProject: and(isAuthenticated),
   },
 });

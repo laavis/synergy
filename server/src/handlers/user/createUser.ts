@@ -11,8 +11,6 @@ export interface ICreateUser {
 }
 
 export const create = async (input: ICreateUser) => {
-  console.log('skdhsd');
-  console.log(input);
   const { email, password, rePassword, firstName, lastName } = input;
 
   const existingUser = await UserModel.findOne({ email });

@@ -1,7 +1,7 @@
 import { IUser } from '../../models/User';
 import { IContext } from '../../types';
 
-interface IMe extends Pick<IUser, 'email'> {}
+interface IMe extends Pick<IUser, 'email' | '_id'> {}
 
 export const me = async (ctx: IContext) => {
   if (!ctx?.user) {
@@ -10,6 +10,7 @@ export const me = async (ctx: IContext) => {
   }
 
   const user: IMe = {
+    _id: ctx.user._id,
     email: ctx.user.email,
   };
 

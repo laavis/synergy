@@ -8,12 +8,12 @@ export const projectTypeDefs = gql`
 
   type Role {
     type: ERole!
-    # Role name if type is 'other'
+    # Role name if type is 'other' -- no, ts, js etc
     name: String
     skillLevel: Int!
     description: String
     # Ids of the users who has accepted the role
-    person: [ID!]
+    assignees: [ID!]
   }
 
   type Project {
@@ -21,14 +21,36 @@ export const projectTypeDefs = gql`
     # User's id who has created the project
     createdBy: ID!
     # Date when project has been set to start
-    kickoffDate: String
+    kickoff: String
     # Detailed description of the project
     description: String!
-    # Short description of the project
-    excerpt: String!
     # Stack used for the project, e.g. Node.js, React, TypeScript
-    stack: [String!]
+    technologies: [String!]
     # Project roles
-    roles: Role!
+    roles: [Role!]!
+  }
+
+  input RoleInput {
+    type: ERole!
+    name: String
+    skillLevel: Int!
+    description: String
+    assignees: [ID!]
+  }
+
+  input CreateProjectInput {
+    title: String!
+    kickoff: String
+    description: String!
+    technologies: [String!]
+    roles: [RoleInput!]!
+  }
+
+  extend type Mutation {
+    createProject(input: CreateProjectInput!): Project
+  }
+
+  extend type Query {
+    projects: [Project]
   }
 `;

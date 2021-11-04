@@ -3,6 +3,7 @@ import {
   getModelForClass,
   mongoose,
   modelOptions,
+  Severity,
 } from '@typegoose/typegoose';
 import { Skill } from './Skill';
 
@@ -14,7 +15,10 @@ class Location {
   public country?: string;
 }
 
-@modelOptions({ schemaOptions: { collection: 'users' } })
+@modelOptions({
+  schemaOptions: { collection: 'users' },
+  options: { allowMixed: Severity.ALLOW },
+})
 export class User {
   _id!: mongoose.Types.ObjectId;
 

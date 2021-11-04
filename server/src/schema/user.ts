@@ -21,12 +21,14 @@ export const userTypeDefs = gql`
   }
 
   type Me {
+    _id: ID!
     email: String
   }
 
   extend type Query {
     users: [User]
     me: Me
+    user(userId: ID!): User
   }
 
   # Inputs
