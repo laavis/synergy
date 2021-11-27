@@ -12,6 +12,12 @@ import { LogIn } from './pages/LogIn';
 import { Navigation } from './components/Navigation/Navigation';
 import { Projects } from './pages/projects/Projects';
 import { Profile } from './pages/Profile';
+import {
+  CREATE_PROJECT_PATH,
+  PROFILE_PATH,
+  PROJECTS_PATH,
+} from './constants/paths';
+import { CreateProject } from './pages/CreateProject';
 
 const StyledApp = styled.div`
   display: flex;
@@ -50,8 +56,9 @@ export const App: FC = () => {
           />
           <Route exact path='/create-account' component={CreateAccount} />
           <Route exact path='/hello-world' component={HelloWorld} />
-          <Route exact path='/project-board' component={Projects} />
-          <Route exact path='/profile' component={Profile} />
+          <Route exact path={PROJECTS_PATH} component={Projects} />
+          <Route exact path={PROFILE_PATH} component={Profile} />
+          <Route exact path={CREATE_PROJECT_PATH} component={CreateProject} />
         </Switch>
       </StyledApp>
     </AuthProvider>

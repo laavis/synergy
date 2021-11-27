@@ -1,9 +1,11 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { gql, useQuery } from '@apollo/client';
-import { Heading2, Heading3 } from '../../components/Text';
+import { Heading3 } from '../../components/Text';
 import { ProjectCard } from './components/ProjectCard';
-import { Project as IProject } from '../../generated/types';
+import { Project } from '../../generated/types';
+import { LinkButton } from '../../components/Button';
+import { CREATE_PROJECT_PATH } from '../../constants/paths';
 
 const StyledProjects = styled.section`
   width: 100%;
@@ -12,9 +14,12 @@ const StyledProjects = styled.section`
   padding-top: 4rem;
   margin-left: 14rem;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 
   > :first-child {
     margin-bottom: 1rem;
+    margin-left: auto;
   }
 `;
 
@@ -29,12 +34,13 @@ const useProjects = () => {
     query ProjectsQuery {
       projects {
         title
-        kickoff
+        kickoffDate
         description
-        technologies
-        roles {
+        tags
+        developerRoles {
           type
-          name
+          language
+          technologies
           assignees
         }
       }
@@ -53,10 +59,12 @@ export const Projects: FC = () => {
 
   return (
     <StyledProjects>
-      <Heading2>Projects</Heading2>
+      <LinkButton to={CREATE_PROJECT_PATH} $color='#8674fb'>
+        + Create project
+      </LinkButton>
       {!loading ? (
         <ProjectsGrid>
-          {projects.map((project: IProject) => (
+          {projects.map((project: Project) => (
             <ProjectCard project={project} />
           ))}
         </ProjectsGrid>

@@ -9,6 +9,7 @@ import { Body, Heading1, TextLink } from '../components/Text';
 import { Form } from '../components/Form';
 import { useUser } from '../util/AuthProvider';
 import { useLogin } from '../hooks/useLogin';
+import { PROJECTS_PATH } from '../constants/paths';
 
 const FooterIdk = styled.div`
   display: flex;
@@ -38,7 +39,7 @@ export const LogIn: FC<ILogIn> = ({ history }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.push('/project-board');
+      history.push(PROJECTS_PATH);
     }
   }, [isAuthenticated, history]);
 

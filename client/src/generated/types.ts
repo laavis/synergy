@@ -18,26 +18,44 @@ export type AccessToken = {
 
 export type CreateProjectInput = {
   description: Scalars['String'];
-  kickoff?: Maybe<Scalars['String']>;
-  roles: Array<RoleInput>;
-  technologies?: Maybe<Array<Scalars['String']>>;
+  developerRoles: Array<DeveloperRoleInput>;
+  kickoffDate?: Maybe<Scalars['String']>;
+  otherRoles?: Maybe<Array<OtherRoleInput>>;
+  tags?: Maybe<Array<Scalars['String']>>;
   title: Scalars['String'];
 };
 
+export type DeveloperRole = {
+  __typename?: 'DeveloperRole';
+  assignees?: Maybe<Array<Scalars['ID']>>;
+  description?: Maybe<Scalars['String']>;
+  language: Scalars['String'];
+  maxAssignees?: Maybe<Scalars['Int']>;
+  skillLevel: Scalars['Int'];
+  technologies?: Maybe<Array<Scalars['String']>>;
+  type: ERole;
+};
+
+export type DeveloperRoleInput = {
+  assignees?: Maybe<Array<Scalars['ID']>>;
+  description?: Maybe<Scalars['String']>;
+  language: Scalars['String'];
+  maxAssignees?: Maybe<Scalars['Int']>;
+  skillLevel: Scalars['Int'];
+  technologies?: Maybe<Array<Scalars['String']>>;
+  type: ERole;
+};
+
 export enum ERole {
-  BackEndDeveloper = 'back_end_developer',
-  Developer = 'developer',
-  FrontEndDeveloper = 'front_end_developer',
+  BackendDeveloper = 'backend_developer',
+  Designer = 'designer',
+  FrontendDeveloper = 'frontend_developer',
   FullstackDeveloper = 'fullstack_developer',
-  Other = 'other',
-  UiDesigner = 'ui_designer',
-  UxDesigner = 'ux_designer'
+  Other = 'other'
 }
 
 export enum ESkillType {
-  Database = 'database',
   Design = 'design',
-  Devops = 'devops',
   Framework = 'framework',
   Other = 'other',
   Programming = 'programming'
@@ -93,13 +111,35 @@ export type MutationUpdateUserArgs = {
   input?: Maybe<UpdateUserInput>;
 };
 
+export type OtherRole = {
+  __typename?: 'OtherRole';
+  assignees?: Maybe<Array<Scalars['ID']>>;
+  description?: Maybe<Scalars['String']>;
+  maxAssignees?: Maybe<Scalars['Int']>;
+  name: Scalars['String'];
+  skillLevel: Scalars['Int'];
+  technologies?: Maybe<Array<Scalars['String']>>;
+  type: ERole;
+};
+
+export type OtherRoleInput = {
+  assignees?: Maybe<Array<Scalars['ID']>>;
+  description?: Maybe<Scalars['String']>;
+  maxAssignees?: Maybe<Scalars['Int']>;
+  name: Scalars['String'];
+  skillLevel: Scalars['Int'];
+  technologies?: Maybe<Array<Scalars['String']>>;
+  type: ERole;
+};
+
 export type Project = {
   __typename?: 'Project';
   createdBy: Scalars['ID'];
   description: Scalars['String'];
-  kickoff?: Maybe<Scalars['String']>;
-  roles: Array<Role>;
-  technologies?: Maybe<Array<Scalars['String']>>;
+  developerRoles: Array<DeveloperRole>;
+  kickoffDate?: Maybe<Scalars['String']>;
+  otherRoles?: Maybe<Array<OtherRole>>;
+  tags?: Maybe<Array<Scalars['String']>>;
   title: Scalars['String'];
 };
 
@@ -121,23 +161,6 @@ export type QueryRenewAccessTokenArgs = {
 
 export type QueryUserArgs = {
   userId: Scalars['ID'];
-};
-
-export type Role = {
-  __typename?: 'Role';
-  assignees?: Maybe<Array<Scalars['ID']>>;
-  description?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  skillLevel: Scalars['Int'];
-  type: ERole;
-};
-
-export type RoleInput = {
-  assignees?: Maybe<Array<Scalars['ID']>>;
-  description?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  skillLevel: Scalars['Int'];
-  type: ERole;
 };
 
 export type Skill = {

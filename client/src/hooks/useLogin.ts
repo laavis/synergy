@@ -1,6 +1,7 @@
 import { gql, useMutation } from '@apollo/client';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
+import { PROJECTS_PATH } from '../constants/paths';
 
 const LOGIN = gql`
   mutation Login($email: String!, $password: String!) {
@@ -23,7 +24,7 @@ export const useLogin = () => {
       localStorage.setItem('refresh-token', refreshToken);
       sessionStorage.setItem('access-token', accessToken);
 
-      history.push('/project-board');
+      history.push(PROJECTS_PATH);
     }
   }, [loading, data, history]);
 

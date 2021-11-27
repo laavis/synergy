@@ -30,7 +30,7 @@ export interface INavItemProps {
 export const NavItem: FC<INavItemProps> = ({ to, children }) => {
   const location = useLocation();
 
-  const active = location.pathname.substring(1) === to;
+  const active = `/${location.pathname.substring(1)}` === to;
 
   return (
     <StyledNavItem $active={active}>

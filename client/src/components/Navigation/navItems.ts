@@ -1,3 +1,5 @@
+import { PROFILE_PATH, PROJECTS_PATH } from '../../constants/paths';
+
 export interface INavItem {
   to: string;
   name: string;
@@ -5,11 +7,11 @@ export interface INavItem {
 
 export const navItems: INavItem[] = [
   {
-    to: 'project-board',
-    name: 'Project Board',
+    to: PROJECTS_PATH,
+    name: 'Projects',
   },
   {
-    to: 'profile',
+    to: PROFILE_PATH,
     name: 'Profile',
   },
 ];
