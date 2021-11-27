@@ -8,9 +8,7 @@ const StyledNavigation = styled.div`
   padding-top: 4rem;
 `;
 
-export interface INavigationProps {}
-
-export const Navigation: FC<INavigationProps> = ({}) => {
+export const Navigation: FC = () => {
   return (
     <StyledNavigation>
       {navItems.map(item => (

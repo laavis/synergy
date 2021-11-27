@@ -45,9 +45,7 @@ export const useAuthContext = (): IAuthContext => {
     sessionStorage.getItem('access-token') || null
   );
 
-  const [refreshToken, setRefreshToken] = useState<string | null>(
-    localStorage.getItem('refresh-token') || null
-  );
+  const refreshToken = localStorage.getItem('refresh-token') || null;
 
   const { loading, data, refetch } = useQuery(ME_QUERY);
 

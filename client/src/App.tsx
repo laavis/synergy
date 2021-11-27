@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
 import { AuthProvider, useAuthContext, useUser } from './util/AuthProvider';
@@ -32,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
 
 export const App: FC = () => {
   const authState = useAuthContext();
-  const { user, isAuthenticated } = useUser();
+  const { isAuthenticated } = useUser();
 
   return (
     <AuthProvider value={authState}>

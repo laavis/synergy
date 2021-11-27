@@ -1,17 +1,11 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { AddSkill } from '../components/AddSkill';
 import { Form } from '../components/Form';
 import { Layout } from '../components/Layout';
-import {
-  Body,
-  Heading2,
-  Heading3,
-  Heading4,
-  SmallTextStrong,
-} from '../components/Text';
-import { MutationUpdateUserArgs, User, ESkillType } from '../generated/types';
+import { Body, Heading2, Heading4, SmallTextStrong } from '../components/Text';
+import { User } from '../generated/types';
 
 const StyledProfile = styled.section`
   width: 100%;
@@ -56,9 +50,7 @@ const useProfile = (userId: string) => {
   return { user, loading };
 };
 
-export interface IProfileProps {}
-
-export const Profile: FC<IProfileProps> = ({}) => {
+export const Profile: FC = () => {
   const { user, loading } = useProfile('617826384d7c8a75310bd037');
 
   return (

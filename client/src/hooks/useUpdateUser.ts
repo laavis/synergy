@@ -15,10 +15,9 @@ export const useUpdateUser = () => {
     }
   `;
 
-  const [updateUser, { data, loading }] = useMutation<
-    UpdateUserInput,
-    MutationUpdateUserArgs
-  >(UPDATE_USER);
+  const [updateUser] = useMutation<UpdateUserInput, MutationUpdateUserArgs>(
+    UPDATE_USER
+  );
 
   return { updateUser };
 };

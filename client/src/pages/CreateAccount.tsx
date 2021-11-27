@@ -1,4 +1,4 @@
-import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { FC, SyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
 
@@ -8,11 +8,6 @@ import { Input } from '../components/Input';
 import { Layout } from '../components/Layout';
 import { Body, Heading1, SmallText, TextLink } from '../components/Text';
 import { Form } from '../components/Form';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 const ErrorMessage = styled.div`
   margin-top: 1rem;
@@ -60,7 +55,7 @@ const useCreateAccount = () => {
     }
   `;
 
-  const [createAccount, { loading, data, error }] = useMutation(
+  const [createAccount, { loading, error }] = useMutation(
     CREATE_USER_MUTATION,
     { errorPolicy: 'all' }
   );

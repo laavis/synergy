@@ -20,7 +20,7 @@ const useLogin = () => {
     }
   `;
 
-  const [login, { loading, data, error }] = useMutation(LOGIN);
+  const [login, { loading, data }] = useMutation(LOGIN);
   const history = useHistory();
 
   useEffect(() => {
