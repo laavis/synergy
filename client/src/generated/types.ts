@@ -1,7 +1,13 @@
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -27,7 +33,6 @@ export type CreateProjectInput = {
 
 export type DeveloperRole = {
   __typename?: 'DeveloperRole';
-  assignees?: Maybe<Array<Scalars['ID']>>;
   description?: Maybe<Scalars['String']>;
   language: Scalars['String'];
   maxAssignees?: Maybe<Scalars['Int']>;
@@ -37,7 +42,6 @@ export type DeveloperRole = {
 };
 
 export type DeveloperRoleInput = {
-  assignees?: Maybe<Array<Scalars['ID']>>;
   description?: Maybe<Scalars['String']>;
   language: Scalars['String'];
   maxAssignees?: Maybe<Scalars['Int']>;
@@ -51,14 +55,14 @@ export enum ERole {
   Designer = 'designer',
   FrontendDeveloper = 'frontend_developer',
   FullstackDeveloper = 'fullstack_developer',
-  Other = 'other'
+  Other = 'other',
 }
 
 export enum ESkillType {
   Design = 'design',
   Framework = 'framework',
   Other = 'other',
-  Programming = 'programming'
+  Programming = 'programming',
 }
 
 export type Location = {
@@ -82,15 +86,14 @@ export type Mutation = {
   __typename?: 'Mutation';
   createProject?: Maybe<Project>;
   createUser?: Maybe<User>;
+  joinProject: Scalars['Boolean'];
   login?: Maybe<Tokens>;
   updateUser?: Maybe<User>;
 };
 
-
 export type MutationCreateProjectArgs = {
   input: CreateProjectInput;
 };
-
 
 export type MutationCreateUserArgs = {
   email: Scalars['String'];
@@ -100,12 +103,14 @@ export type MutationCreateUserArgs = {
   rePassword: Scalars['String'];
 };
 
+export type MutationJoinProjectArgs = {
+  projectId: Scalars['ID'];
+};
 
 export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
 };
-
 
 export type MutationUpdateUserArgs = {
   input?: Maybe<UpdateUserInput>;
@@ -113,7 +118,6 @@ export type MutationUpdateUserArgs = {
 
 export type OtherRole = {
   __typename?: 'OtherRole';
-  assignees?: Maybe<Array<Scalars['ID']>>;
   description?: Maybe<Scalars['String']>;
   maxAssignees?: Maybe<Scalars['Int']>;
   name: Scalars['String'];
@@ -123,7 +127,6 @@ export type OtherRole = {
 };
 
 export type OtherRoleInput = {
-  assignees?: Maybe<Array<Scalars['ID']>>;
   description?: Maybe<Scalars['String']>;
   maxAssignees?: Maybe<Scalars['Int']>;
   name: Scalars['String'];
@@ -134,11 +137,13 @@ export type OtherRoleInput = {
 
 export type Project = {
   __typename?: 'Project';
+  _id: Scalars['ID'];
   createdBy: Scalars['ID'];
   description: Scalars['String'];
   developerRoles: Array<DeveloperRole>;
   kickoffDate?: Maybe<Scalars['String']>;
   otherRoles?: Maybe<Array<OtherRole>>;
+  members?: Maybe<Array<Scalars['ID']>>;
   tags?: Maybe<Array<Scalars['String']>>;
   title: Scalars['String'];
 };
@@ -153,11 +158,9 @@ export type Query = {
   users?: Maybe<Array<Maybe<User>>>;
 };
 
-
 export type QueryRenewAccessTokenArgs = {
   refreshToken: Scalars['String'];
 };
-
 
 export type QueryUserArgs = {
   userId: Scalars['ID'];

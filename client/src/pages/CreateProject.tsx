@@ -5,10 +5,10 @@ import { Button } from '../components/Button';
 import { Form } from '../components/Form';
 import { Input } from '../components/Input';
 import { Layout } from '../components/Layout';
-import { RoleForm } from '../components/RoleForm';
 import { Heading2 } from '../components/Text';
 import { MutationCreateProjectArgs } from '../generated/types';
 import { useUser } from '../util/AuthProvider';
+import { FormBlock } from '../components/FormBlock';
 
 const StyledCreateProject = styled.section`
   width: 100%;
@@ -49,11 +49,11 @@ export const CreateProject: FC<ICreateProjectProps> = ({}) => {
       <Heading2>Create project</Heading2>
       <Layout.FormWrapper>
         <Form>
-          <Input type='text' label='Project title' />
+          <Input type='text' label='Project name' />
           <Input type='text' label='Project title' />
           <textarea placeholder='Description' />
           <Input type='text' label='Technologies (comma separated)' />
-          <RoleForm />
+          <FormBlock.DeveloperRole />
           <Button>Create</Button>
         </Form>
       </Layout.FormWrapper>

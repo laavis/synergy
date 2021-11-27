@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import styled from 'styled-components';
+import { gql, useMutation } from '@apollo/client';
+
 import { Button } from '../../../components/Button';
 import { Body, Heading3, SmallText } from '../../../components/Text';
 import { theme } from '../../../styles/theme';
-import { Project as IProject } from '../../../generated/types';
+import { MutationJoinProjectArgs, Project } from '../../../generated/types';
 import { getRandomTagColor, Tag } from '../../../components/Tag';
 
 const StyledProjectCard = styled.article`
@@ -26,7 +28,6 @@ const StyledProjectCard = styled.article`
 
   > :last-child {
     margin-top: auto;
-    align-self: flex-end;
   }
 `;
 
@@ -45,13 +46,56 @@ const Description = styled(Body)`
   padding-bottom: 1rem;
 `;
 
-export interface IProjectCardProps {
-  project: IProject;
-}
+const ProjectCardFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
-export const ProjectCard: FC<IProjectCardProps> = ({ project }) => {
-  const { tags } = project;
+const Participants = styled.div``;
+
+const Idk = styled.div`
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 100%;
+  background-color: #c4c4c4;
+`;
+
+const useJoinProject = () => {
+  const JOIN_PROJECT = gql`
+    mutation JoinProject($projectId: ID!) {
+      joinProject(projectId: $projectId)
+    }
+  `;
+
+  const [joinProjectMutation] =
+    useMutation<MutationJoinProjectArgs>(JOIN_PROJECT);
+
+  const joinProject = useCallback(
+    async (projectId: string) => {
+      try {
+        await joinProjectMutation({
+          variables: {
+            projectId,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [joinProjectMutation]
+  );
+
+  return { joinProject };
+};
+
+export const ProjectCard: FC<{ project: Project }> = ({ project }) => {
+  const { tags, members } = project;
   const hasTags = tags !== null && tags !== undefined;
+  const hasMembers = members !== null && members !== undefined;
+
+  const { joinProject } = useJoinProject();
+
+  console.log(members);
 
   return (
     <StyledProjectCard>
@@ -68,7 +112,16 @@ export const ProjectCard: FC<IProjectCardProps> = ({ project }) => {
         )}
       </div>
       <Description>{project.description}</Description>
-      <Button>Join</Button>
+      <ProjectCardFooter>
+        {hasMembers && (
+          <Participants>
+            {members?.map(index => (
+              <Idk key={index}></Idk>
+            ))}
+          </Participants>
+        )}
+        <Button onClick={() => joinProject(project._id)}>Join</Button>
+      </ProjectCardFooter>
     </StyledProjectCard>
   );
 };

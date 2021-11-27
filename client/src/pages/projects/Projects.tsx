@@ -30,24 +30,25 @@ const ProjectsGrid = styled.div`
 `;
 
 const useProjects = () => {
-  const PROJECTS_QUERY = gql`
+  const GET_PROJECTS = gql`
     query ProjectsQuery {
       projects {
+        _id
         title
         kickoffDate
         description
         tags
+        members
         developerRoles {
           type
           language
           technologies
-          assignees
         }
       }
     }
   `;
 
-  const { data, loading } = useQuery(PROJECTS_QUERY);
+  const { data, loading } = useQuery(GET_PROJECTS);
 
   const projects = data?.projects;
 
