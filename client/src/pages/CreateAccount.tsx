@@ -1,6 +1,5 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
-import { gql, useMutation } from '@apollo/client';
 
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
@@ -8,6 +7,8 @@ import { Input } from '../components/Input';
 import { Layout } from '../components/Layout';
 import { Body, Heading1, SmallText, TextLink } from '../components/Text';
 import { Form } from '../components/Form';
+import { useCreateAccount } from '../hooks/useCreateAccount';
+import { useLogin } from '../hooks/useLogin';
 
 const ErrorMessage = styled.div`
   margin-top: 1rem;
@@ -33,36 +34,6 @@ const FooterIdk = styled.div`
   }
 `;
 
-const useCreateAccount = () => {
-  const CREATE_USER_MUTATION = gql`
-    mutation CreateUserMutation(
-      $email: String!
-      $password: String!
-      $rePassword: String!
-      $firstName: String!
-      $lastName: String!
-    ) {
-      createUser(
-        email: $email
-        password: $password
-        rePassword: $rePassword
-        firstName: $firstName
-        lastName: $lastName
-      ) {
-        firstName
-        lastName
-      }
-    }
-  `;
-
-  const [createAccount, { loading, error }] = useMutation(
-    CREATE_USER_MUTATION,
-    { errorPolicy: 'all' }
-  );
-
-  return { createAccount, loading, error };
-};
-
 interface INewUser {
   email?: string;
   password?: string;
@@ -83,22 +54,33 @@ export const CreateAccount: FC = () => {
   });
   const { createAccount, loading, error } = useCreateAccount();
 
-  const handleCreateAccount = () => {
-    if (!newUser) return;
+  const { login } = useLogin();
 
-    // todo frontend validation?
+  const handleCreateAccount = async () => {
+    if (!newUser) return;
 
     const { email, password, rePassword, firstName, lastName } = newUser;
 
-    createAccount({
-      variables: {
-        email,
-        password,
-        rePassword,
-        firstName,
-        lastName,
-      },
-    });
+    try {
+      await createAccount({
+        variables: {
+          email,
+          password,
+          rePassword,
+          firstName,
+          lastName,
+        },
+      });
+
+      await login({
+        variables: {
+          email,
+          password,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChange = (e: SyntheticEvent, key: TNewUserField) => {

@@ -1,7 +1,6 @@
 import { FC, SyntheticEvent, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { RouteComponentProps, useHistory } from 'react-router';
-import { gql, useMutation } from '@apollo/client';
+import { RouteComponentProps } from 'react-router';
 
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
@@ -9,34 +8,7 @@ import { Layout } from '../components/Layout';
 import { Body, Heading1, TextLink } from '../components/Text';
 import { Form } from '../components/Form';
 import { useUser } from '../util/AuthProvider';
-
-const useLogin = () => {
-  const LOGIN = gql`
-    mutation Login($email: String!, $password: String!) {
-      login(email: $email, password: $password) {
-        accessToken
-        refreshToken
-      }
-    }
-  `;
-
-  const [login, { loading, data }] = useMutation(LOGIN);
-  const history = useHistory();
-
-  useEffect(() => {
-    if (!loading && data) {
-      // save tokens
-      const { accessToken, refreshToken } = data.login;
-
-      localStorage.setItem('refresh-token', refreshToken);
-      sessionStorage.setItem('access-token', accessToken);
-
-      history.push('/project-board');
-    }
-  }, [loading, data, history]);
-
-  return { login, loading, data };
-};
+import { useLogin } from '../hooks/useLogin';
 
 const FooterIdk = styled.div`
   display: flex;
