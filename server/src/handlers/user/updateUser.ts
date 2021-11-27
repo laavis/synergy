@@ -22,17 +22,15 @@ export interface IUpdateUserInput {
 }
 
 export const updateUser = async (input: IUpdateUserInput, ctx: IContext) => {
-  const { firstName, lastName, bio, location, skills } = input;
+  const { skills, ...userDetails } = input;
+  console.log(skills?.map(skill => typeof skill.type));
 
   try {
     const user = await UserModel.findByIdAndUpdate(
       { _id: ctx.user._id },
       {
-        $set: {
-          firstName,
-          lastName,
-          bio,
-          location,
+        $set: userDetails,
+        $push: {
           skills,
         },
       },

@@ -18,7 +18,6 @@ const app = express();
 
 const server = new ApolloServer({
   schema: applyMiddleware(schema, permissions),
-  validationRules: [depthLimit(7)],
   context: async ({ req, res }) => ({
     req,
     res,
