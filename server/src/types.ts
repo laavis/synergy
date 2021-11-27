@@ -5,30 +5,38 @@ export interface IContext {
 }
 
 export enum ERole {
-  DEVELOPER = 'developer',
-  FRONT_END_DEVELOPER = 'front_end_developer',
-  BACK_END_DEVELOPER = 'back_end_developer',
+  FRONTEND_DEVELOPER = 'frontend_developer',
+  BACKEND_DEVELOPER = 'backend_developer',
   FULLSTACK_DEVELOPER = 'fullstack_developer',
-  UI_DESIGNER = 'ui_designer',
-  UX_DESIGNER = 'ux_designer',
+  DESIGNER = 'designer',
   OTHER = 'other',
 }
 
 export enum ESkillType {
   PROGRAMMING = 'programming',
   FRAMEWORK = 'framework',
-  DATABASE = 'database',
   DESIGN = 'design',
-  DEVOPS = 'devops',
   OTHER = 'other',
 }
 
-export interface IRole {
+export interface IDeveloperRole {
   type: ERole;
-  name?: string;
   skillLevel: TSkillLevel;
-  ddescription?: string;
+  language: string;
+  technologies?: string[];
+  description?: string;
+  assignees: string[]; // user ids
+  maxAssignees?: number;
+}
+
+export interface IOtherRole {
+  type: ERole;
+  name: string;
+  skillLevel: TSkillLevel;
+  technologies?: string[];
+  description?: string;
   assignees?: string[];
+  maxAssignees?: number;
 }
 
 export type TSkillLevel = 1 | 2 | 3 | 4 | 5;

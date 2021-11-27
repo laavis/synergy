@@ -5,7 +5,7 @@ import {
   prop,
   Severity,
 } from '@typegoose/typegoose';
-import { ERole, IRole, TSkillLevel } from '../types';
+import { IDeveloperRole, IOtherRole } from '../types';
 
 @modelOptions({
   schemaOptions: { collection: 'projects' },
@@ -24,13 +24,16 @@ export class Project {
   public createdBy!: mongoose.Types.ObjectId;
 
   @prop({ required: true })
-  roles!: IRole[];
+  developerRoles!: IDeveloperRole[];
 
   @prop()
-  technologies?: string[];
+  otherRoles!: IOtherRole[];
 
   @prop()
-  kickoff?: string;
+  tags?: string[];
+
+  @prop()
+  kickoffDate?: string;
 }
 
 export interface IProject extends Project {}

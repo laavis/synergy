@@ -6,14 +6,44 @@ export const projectTypeDefs = gql`
     ${Object.values(ERole).join('\n')}
   }
 
-  type Role {
+  type DeveloperRole {
     type: ERole!
-    # Role name if type is 'other' -- no, ts, js etc
-    name: String
     skillLevel: Int!
+    language: String!
+    technologies: [String!]
     description: String
-    # Ids of the users who has accepted the role
     assignees: [ID!]
+    maxAssignees: Int
+  }
+
+  input DeveloperRoleInput {
+    type: ERole!
+    skillLevel: Int!
+    language: String!
+    technologies: [String!]
+    description: String
+    assignees: [ID!]
+    maxAssignees: Int
+  }
+
+  type OtherRole {
+    type: ERole!
+    name: String!
+    skillLevel: Int!
+    technologies: [String!]
+    description: String
+    assignees: [ID!]
+    maxAssignees: Int
+  }
+
+  input OtherRoleInput {
+    type: ERole!
+    name: String!
+    skillLevel: Int!
+    technologies: [String!]
+    description: String
+    assignees: [ID!]
+    maxAssignees: Int
   }
 
   type Project {
@@ -21,29 +51,23 @@ export const projectTypeDefs = gql`
     # User's id who has created the project
     createdBy: ID!
     # Date when project has been set to start
-    kickoff: String
+    kickoffDate: String
     # Detailed description of the project
     description: String!
     # Stack used for the project, e.g. Node.js, React, TypeScript
-    technologies: [String!]
-    # Project roles
-    roles: [Role!]!
+    tags: [String!]
+    developerRoles: [DeveloperRole!]!
+    otherRoles: [OtherRole!]
   }
 
-  input RoleInput {
-    type: ERole!
-    name: String
-    skillLevel: Int!
-    description: String
-    assignees: [ID!]
-  }
 
   input CreateProjectInput {
     title: String!
-    kickoff: String
     description: String!
-    technologies: [String!]
-    roles: [RoleInput!]!
+    tags: [String!]
+    developerRoles: [DeveloperRoleInput!]!
+    otherRoles: [OtherRoleInput!]
+    kickoffDate: String
   }
 
   extend type Mutation {

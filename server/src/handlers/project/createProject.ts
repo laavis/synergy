@@ -1,12 +1,13 @@
 import { ProjectModel } from '../../models/Project';
-import { IContext, IRole } from '../../types';
+import { IContext, IDeveloperRole, IOtherRole } from '../../types';
 
 export interface ICreateProjectInput {
   title: string;
-  description: string;
-  kickoff: string;
-  technologies: string[];
-  roles: IRole[];
+  description?: string;
+  kickoffDate?: string;
+  tags: string[];
+  developerRoles: IDeveloperRole[];
+  otherRoles?: IOtherRole[];
 }
 
 export const createProject = async (
@@ -14,7 +15,6 @@ export const createProject = async (
   ctx: IContext
 ) => {
   try {
-    console;
     const createdBy = ctx.user._id;
 
     const newProject = await ProjectModel.create({
