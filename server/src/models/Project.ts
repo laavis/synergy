@@ -33,6 +33,9 @@ export class Project {
   tags?: string[];
 
   @prop()
+  members?: mongoose.Types.ObjectId[];
+
+  @prop()
   kickoffDate?: string;
 }
 

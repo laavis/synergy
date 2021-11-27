@@ -25,7 +25,6 @@ export interface IDeveloperRole {
   language: string;
   technologies?: string[];
   description?: string;
-  assignees: string[]; // user ids
   maxAssignees?: number;
 }
 
@@ -35,7 +34,6 @@ export interface IOtherRole {
   skillLevel: TSkillLevel;
   technologies?: string[];
   description?: string;
-  assignees?: string[];
   maxAssignees?: number;
 }
 

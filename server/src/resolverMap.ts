@@ -60,6 +60,22 @@ const resolverMap: IResolvers = {
     ) {
       return await createProject(args.input, ctx);
     },
+    async joinProject(_: void, args: { projectId: string }, ctx: IContext) {
+      try {
+        await ProjectModel.findByIdAndUpdate(
+          { _id: args.projectId },
+          {
+            $push: {
+              members: [ctx.user._id],
+            },
+          }
+        );
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
   },
 };
 export default resolverMap;

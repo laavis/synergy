@@ -12,7 +12,6 @@ export const projectTypeDefs = gql`
     language: String!
     technologies: [String!]
     description: String
-    assignees: [ID!]
     maxAssignees: Int
   }
 
@@ -22,7 +21,6 @@ export const projectTypeDefs = gql`
     language: String!
     technologies: [String!]
     description: String
-    assignees: [ID!]
     maxAssignees: Int
   }
 
@@ -32,7 +30,6 @@ export const projectTypeDefs = gql`
     skillLevel: Int!
     technologies: [String!]
     description: String
-    assignees: [ID!]
     maxAssignees: Int
   }
 
@@ -42,11 +39,11 @@ export const projectTypeDefs = gql`
     skillLevel: Int!
     technologies: [String!]
     description: String
-    assignees: [ID!]
     maxAssignees: Int
   }
 
   type Project {
+    _id: ID!
     title: String!
     # User's id who has created the project
     createdBy: ID!
@@ -58,6 +55,7 @@ export const projectTypeDefs = gql`
     tags: [String!]
     developerRoles: [DeveloperRole!]!
     otherRoles: [OtherRole!]
+    members: [ID!]
   }
 
 
@@ -72,6 +70,7 @@ export const projectTypeDefs = gql`
 
   extend type Mutation {
     createProject(input: CreateProjectInput!): Project
+    joinProject(projectId: ID!): Boolean!
   }
 
   extend type Query {
