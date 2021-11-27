@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import {
   ApolloClient,
   InMemoryCache,
@@ -13,8 +14,6 @@ import { App } from './App';
 
 const httpLink = new HttpLink({ uri: 'http://localhost:3000/graphql' });
 const authMiddleware = new ApolloLink((request, forward) => {
-  const operationName = request.operationName;
-  // console.log({ operationName });
   const token = sessionStorage.getItem('access-token');
 
   request.setContext(({ headers = {} }) => ({
@@ -35,7 +34,9 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -36,26 +36,24 @@ export const App: FC = () => {
 
   return (
     <AuthProvider value={authState}>
-      <BrowserRouter>
-        <StyledApp>
-          {isAuthenticated && <Navigation />}
-          <GlobalStyle />
-          <Switch>
-            <Route exact path='/'>
-              {!isAuthenticated && <Redirect to='/login' />}
-            </Route>
-            <Route
-              exact
-              path='/login'
-              render={routeProps => <LogIn {...routeProps} />}
-            />
-            <Route exact path='/create-account' component={CreateAccount} />
-            <Route exact path='/hello-world' component={HelloWorld} />
-            <Route exact path='/project-board' component={Projects} />
-            <Route exact path='/profile' component={Profile} />
-          </Switch>
-        </StyledApp>
-      </BrowserRouter>
+      <StyledApp>
+        {isAuthenticated && <Navigation />}
+        <GlobalStyle />
+        <Switch>
+          <Route exact path='/'>
+            {!isAuthenticated && <Redirect to='/login' />}
+          </Route>
+          <Route
+            exact
+            path='/login'
+            render={routeProps => <LogIn {...routeProps} />}
+          />
+          <Route exact path='/create-account' component={CreateAccount} />
+          <Route exact path='/hello-world' component={HelloWorld} />
+          <Route exact path='/project-board' component={Projects} />
+          <Route exact path='/profile' component={Profile} />
+        </Switch>
+      </StyledApp>
     </AuthProvider>
   );
 };

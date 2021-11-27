@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { gql, useLazyQuery, useQuery } from '@apollo/client';
 import { isValidToken } from './isValidToken';
 import { useHistory } from 'react-router';

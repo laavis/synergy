@@ -1,20 +1,17 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import React, { FC, useEffect } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
-import { Button } from '../components/Button';
+import { AddSkill } from '../components/AddSkill';
 import { Form } from '../components/Form';
-import { Input } from '../components/Input';
 import { Layout } from '../components/Layout';
-import { RoleForm } from '../components/RoleForm';
-import { Body, Heading2, Heading3, SmallText } from '../components/Text';
 import {
-  MutationCreateProjectArgs,
-  MutationUpdateUserArgs,
-  User,
-  ESkillType,
-} from '../generated/types';
-import { ICreateProjectInput } from '../types';
-import { useUser } from '../util/AuthProvider';
+  Body,
+  Heading2,
+  Heading3,
+  Heading4,
+  SmallTextStrong,
+} from '../components/Text';
+import { MutationUpdateUserArgs, User, ESkillType } from '../generated/types';
 
 const StyledProfile = styled.section`
   width: 100%;
@@ -23,17 +20,19 @@ const StyledProfile = styled.section`
   padding-top: 4rem;
   margin-left: 14rem;
   box-sizing: border-box;
-
   > :first-child {
     margin-bottom: 1rem;
   }
-
   > :last-child {
     padding: 2rem 0;
   }
 `;
 
-export interface IProfileProps {}
+const SkillFormWrapper = styled(Layout.FormWrapper)`
+  > :first-child {
+    margin-bottom: 1rem;
+  }
+`;
 
 const useProfile = (userId: string) => {
   const GET_USER = gql`
@@ -42,22 +41,7 @@ const useProfile = (userId: string) => {
         firstName
         lastName
         bio
-      }
-    }
-  `;
-
-  const { data, loading } = useQuery(GET_USER, { variables: { userId } });
-  const user: User = data?.user;
-
-  return { user, loading };
-};
-
-const useUpdateUser = () => {
-  const UPDATE_USER = gql`
-    mutation UpdateUser($input: MutationUpdateUserArgs) {
-      updateUser(input: $input) {
         skills {
-          type
           name
           level
           description
@@ -66,40 +50,45 @@ const useUpdateUser = () => {
     }
   `;
 
-  const [updateUser, { data, loading }] =
-    useMutation<MutationUpdateUserArgs>(UPDATE_USER);
+  const { data, loading } = useQuery(GET_USER, { variables: { userId } });
+  const user = data?.user as User;
 
-  return { updateUser };
+  return { user, loading };
 };
 
+export interface IProfileProps {}
+
 export const Profile: FC<IProfileProps> = ({}) => {
-  const { user } = useProfile('617826384d7c8a75310bd037');
-  const { updateUser } = useUpdateUser();
-
-  if (!user) {
-    return <Heading2>No user!</Heading2>;
-  }
-
-  const { firstName, lastName, bio } = user;
-
-  const skillTypes = Object.keys(ESkillType);
+  const { user, loading } = useProfile('617826384d7c8a75310bd037');
 
   return (
     <StyledProfile>
-      <Heading2>
-        {firstName} {lastName}
-      </Heading2>
-      {bio && <Body>{bio}</Body>}
-      <Layout.FormWrapper>
-        <Heading3>Add skill</Heading3>
-        <Form>
-          <select name='Skill Type'>
-            {skillTypes.map(skillType => (
-              <option value={skillType}>{skillType}</option>
+      {loading ? (
+        <Heading2>loading...</Heading2>
+      ) : (
+        <>
+          <Heading2>
+            {user.firstName} {user.lastName}
+          </Heading2>
+
+          {user.bio && <Body>{user.bio}</Body>}
+          <Heading4>Skills</Heading4>
+          {user.skills &&
+            user.skills.map(skill => (
+              <>
+                <SmallTextStrong>
+                  {skill.name} - level {skill.level}
+                </SmallTextStrong>
+              </>
             ))}
-          </select>
-        </Form>
-      </Layout.FormWrapper>
+          <SkillFormWrapper>
+            <Heading4>Add skill</Heading4>
+            <Form>
+              <AddSkill />
+            </Form>
+          </SkillFormWrapper>
+        </>
+      )}
     </StyledProfile>
   );
 };

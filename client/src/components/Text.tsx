@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 const FONT_BODY = "'Roboto', 'sans-serif'";
-// const FONT_HEADING = "'Karla', 'sans-serif'";
 const FONT_HEADING = "'Sora', 'sans-serif'";
 
 export const baseBodyStyles = css`
@@ -13,12 +12,10 @@ export const baseBodyStyles = css`
 export const baseHeadingStyles = css`
   margin: 0;
   font-family: ${FONT_HEADING};
-  /* letter-spacing: -1%; */
 `;
 
 export const Heading1 = styled.h1`
   ${baseHeadingStyles};
-  /* font-size: 2.25rem; */
   font-size: 2rem;
 `;
 

@@ -50,14 +50,15 @@ export interface IInputProps {
   onChange?: (e: React.SyntheticEvent) => void;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  value?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, IInputProps>(
-  ({ label, error, ...props }, forwardedRef) => {
+  ({ value, label, error, ...props }, forwardedRef) => {
     return (
       <InputWrapper>
         <SmallText>{label}</SmallText>
-        <StyledInput ref={forwardedRef} as='input' {...props} />
+        <StyledInput value={value} ref={forwardedRef} as='input' {...props} />
         {error && <ErrorText>{error}</ErrorText>}
       </InputWrapper>
     );

@@ -48,10 +48,9 @@ const useProjects = () => {
   return { projects, loading };
 };
 
-export interface IProjectsProps {}
-
-export const Projects: FC<IProjectsProps> = ({}) => {
+export const Projects: FC = () => {
   const { projects, loading } = useProjects();
+
   return (
     <StyledProjects>
       <Heading2>Projects</Heading2>

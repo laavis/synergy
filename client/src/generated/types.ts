@@ -152,7 +152,7 @@ export type SkillInput = {
   description?: Maybe<Scalars['String']>;
   level: Scalars['Int'];
   name?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
+  type?: Maybe<ESkillType>;
 };
 
 export type Tokens = {
