@@ -30,7 +30,7 @@ const Suggestion = styled(Body)`
   position: absolute;
   right: 0.5rem;
   top: 1.85rem;
-  opacity: 0.6;
+  opacity: 0.7;
 `;
 
 const Textarea = styled.textarea`

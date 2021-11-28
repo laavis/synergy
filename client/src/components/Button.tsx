@@ -4,6 +4,7 @@ import { baseBodyStyles, Body } from './Text';
 
 type TButtonProps = {
   $color?: string;
+  $disabled?: boolean;
 };
 
 const buttonStyles = css`
@@ -33,6 +34,13 @@ export const Button = styled.button<TButtonProps>`
     $color &&
     css`
       background-color: ${$color};
+    `}
+
+  ${({ $disabled }) =>
+    $disabled &&
+    css`
+      opacity: 0.3;
+      pointer-events: none;
     `}
 `;
 

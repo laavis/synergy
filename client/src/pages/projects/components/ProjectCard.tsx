@@ -7,14 +7,10 @@ import { Body, Heading3, SmallText } from '../../../components/Text';
 import { theme } from '../../../styles/theme';
 import { MutationJoinProjectArgs, Project } from '../../../generated/types';
 import { getRandomTagColor, Tag } from '../../../components/Tag';
+import { cardBaseStyles } from '../../../styles/baseStyles';
 
 const StyledProjectCard = styled.article`
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  padding: 1.25rem;
-  border-radius: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+  ${cardBaseStyles}
 
   > :first-child {
     > :first-child {
@@ -94,8 +90,6 @@ export const ProjectCard: FC<{ project: Project }> = ({ project }) => {
   const hasMembers = members !== null && members !== undefined;
 
   const { joinProject } = useJoinProject();
-
-  console.log(members);
 
   return (
     <StyledProjectCard>

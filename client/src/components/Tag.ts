@@ -16,3 +16,11 @@ export const Tag = styled.span<{ $color?: string }>`
   padding: 0 0.25rem;
   border-radius: 0.125rem;
 `;
+
+export const Tags = styled.div`
+  display: flex;
+
+  > :not(:last-child) {
+    margin-right: 0.5rem;
+  }
+`;

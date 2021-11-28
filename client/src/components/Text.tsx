@@ -24,9 +24,15 @@ export const Heading2 = styled.h2`
   font-size: 1.75rem;
 `;
 
-export const Heading3 = styled.h3`
+export const Heading3 = styled.h3<{ $faded?: boolean }>`
   ${baseHeadingStyles};
   font-size: 1.375rem;
+
+  ${({ $faded }) =>
+    $faded &&
+    css`
+      opacity: 0.3;
+    `}
 `;
 
 export const Heading4 = styled.h4`
@@ -34,15 +40,33 @@ export const Heading4 = styled.h4`
   font-size: 1rem;
 `;
 
-export const Body = styled.div`
+export const Body = styled.div<{ $dimmed?: boolean; $faded?: boolean }>`
   ${baseBodyStyles};
   font-size: 1rem;
+
+  ${({ $dimmed }) =>
+    $dimmed &&
+    css`
+      opacity: 0.7;
+    `}
+
+  ${({ $faded }) =>
+    $faded &&
+    css`
+      opacity: 0.3;
+    `}
 `;
 
-export const SmallText = styled.div`
+export const SmallText = styled.div<{ $dimmed?: boolean }>`
   ${baseBodyStyles};
   font-size: 0.813rem;
   font-size: 14px;
+
+  ${({ $dimmed }) =>
+    $dimmed &&
+    css`
+      opacity: 0.7;
+    `}
 `;
 
 export const SmallTextStrong = styled(SmallText)`

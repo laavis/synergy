@@ -10,8 +10,11 @@ const InputWrapper = styled.div`
 
   > :first-child {
     margin-bottom: 0.25rem;
-    opacity: 0.6;
   }
+`;
+
+const Label = styled(SmallText)`
+  opacity: 0.6;
 `;
 
 const StyledInput = styled.input`
@@ -21,7 +24,6 @@ const StyledInput = styled.input`
   box-sizing: border-box;
   border: none;
   padding: 0 0.5rem;
-  /* padding: 0.45rem 0.5rem; */
   border-radius: 0.25rem;
   background-color: hsla(240, 4%, 15%, 0.05);
   font-size: 1rem;
@@ -57,7 +59,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
   ({ value, label, error, ...props }, forwardedRef) => {
     return (
       <InputWrapper>
-        <SmallText>{label}</SmallText>
+        <Label>{label}</Label>
         <StyledInput value={value} ref={forwardedRef} as='input' {...props} />
         {error && <ErrorText>{error}</ErrorText>}
       </InputWrapper>
