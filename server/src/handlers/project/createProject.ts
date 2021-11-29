@@ -1,5 +1,5 @@
 import { ProjectModel } from '../../models/Project';
-import { IContext, IDeveloperRole, IOtherRole } from '../../types';
+import { IContext, IDeveloperRole } from '../../types';
 
 export interface ICreateProjectInput {
   title: string;
@@ -7,7 +7,6 @@ export interface ICreateProjectInput {
   kickoffDate?: string;
   tags: string[];
   developerRoles: IDeveloperRole[];
-  otherRoles?: IOtherRole[];
 }
 
 export const createProject = async (

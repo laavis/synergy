@@ -5,7 +5,7 @@ import {
   prop,
   Severity,
 } from '@typegoose/typegoose';
-import { IDeveloperRole, IOtherRole } from '../types';
+import { IDeveloperRole } from '../types';
 
 @modelOptions({
   schemaOptions: { collection: 'projects' },
@@ -25,9 +25,6 @@ export class Project {
 
   @prop({ required: true })
   developerRoles!: IDeveloperRole[];
-
-  @prop()
-  otherRoles!: IOtherRole[];
 
   @prop()
   tags?: string[];

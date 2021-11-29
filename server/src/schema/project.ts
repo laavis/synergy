@@ -24,24 +24,6 @@ export const projectTypeDefs = gql`
     maxAssignees: Int
   }
 
-  type OtherRole {
-    type: ERole!
-    name: String!
-    skillLevel: Int!
-    technologies: [String!]
-    description: String
-    maxAssignees: Int
-  }
-
-  input OtherRoleInput {
-    type: ERole!
-    name: String!
-    skillLevel: Int!
-    technologies: [String!]
-    description: String
-    maxAssignees: Int
-  }
-
   type Project {
     _id: ID!
     title: String!
@@ -54,7 +36,6 @@ export const projectTypeDefs = gql`
     # Stack used for the project, e.g. Node.js, React, TypeScript
     tags: [String!]
     developerRoles: [DeveloperRole!]!
-    otherRoles: [OtherRole!]
     members: [ID!]
   }
 
@@ -64,7 +45,6 @@ export const projectTypeDefs = gql`
     description: String!
     tags: [String!]
     developerRoles: [DeveloperRoleInput!]!
-    otherRoles: [OtherRoleInput!]
     kickoffDate: String
   }
 
