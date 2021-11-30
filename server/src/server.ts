@@ -36,7 +36,7 @@ const server = new ApolloServer({
   server.applyMiddleware({ app, path: '/graphql' });
 
   const httpServer = createServer(app);
-  httpServer.listen({ port: 3000 }, (): void =>
+  httpServer.listen({ port: process.env.PORT }, (): void =>
     console.log(`\n🚀 GraphQL is now running on http://localhost:3000/graphql`)
   );
 })();
