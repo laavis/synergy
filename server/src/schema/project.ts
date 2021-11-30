@@ -10,7 +10,7 @@ export const projectTypeDefs = gql`
     type: ERole!
     skillLevel: Int!
     language: String!
-    technologies: [String!]
+    technologies: [String!]!
     description: String
     maxAssignees: Int
   }
@@ -19,7 +19,7 @@ export const projectTypeDefs = gql`
     type: ERole!
     skillLevel: Int!
     language: String!
-    technologies: [String!]
+    technologies: [String!]!
     description: String
     maxAssignees: Int
   }

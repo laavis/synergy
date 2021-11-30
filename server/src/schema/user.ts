@@ -27,7 +27,7 @@ export const userTypeDefs = gql`
 
   extend type Query {
     users: [User]
-    me: Me
+    me: Me! # check if can do !
     user(userId: ID!): User
   }
 
