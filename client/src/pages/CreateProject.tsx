@@ -80,7 +80,6 @@ export const CreateProject: FC<ICreateProjectProps> = ({}) => {
               setDescription((e.target as HTMLTextAreaElement).value)
             }
           />
-          <Input type='text' label='Technologies (comma separated)' />
           <Dropdown
             title='Choose a role'
             setSelected={setRole}

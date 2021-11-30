@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
 
@@ -8,6 +8,7 @@ import { theme } from '../../../styles/theme';
 import { MutationJoinProjectArgs, Project } from '../../../generated/types';
 import { getRandomTagColor, Tag } from '../../../components/Tag';
 import { cardBaseStyles } from '../../../styles/baseStyles';
+import { useUser } from '../../../util/AuthProvider';
 
 const StyledProjectCard = styled.article`
   ${cardBaseStyles}
@@ -84,10 +85,21 @@ const useJoinProject = () => {
   return { joinProject };
 };
 
+const hasAlreadyJoinedProject = (userId: string, projectMembers: string[]) => {
+  return projectMembers.includes(userId);
+};
+
 export const ProjectCard: FC<{ project: Project }> = ({ project }) => {
   const { tags, members } = project;
   const hasTags = tags !== null && tags !== undefined;
   const hasMembers = members !== null && members !== undefined;
+
+  const { user } = useUser();
+  const userId = user?._id;
+
+  const idk = userId ? hasAlreadyJoinedProject(userId, members ?? []) : false;
+
+  console.log({ idk });
 
   const { joinProject } = useJoinProject();
 
@@ -114,7 +126,9 @@ export const ProjectCard: FC<{ project: Project }> = ({ project }) => {
             ))}
           </Participants>
         )}
-        <Button onClick={() => joinProject(project._id)}>Join</Button>
+        <Button $disabled={idk} onClick={() => joinProject(project._id)}>
+          Join
+        </Button>
       </ProjectCardFooter>
     </StyledProjectCard>
   );

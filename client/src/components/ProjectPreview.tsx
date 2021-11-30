@@ -59,7 +59,7 @@ export const ProjectPreview: FC<IProjectPreviewProps> = ({ children }) => {
   const createProjectState = useCreateProjectState(state => state);
   const { createProject } = useCreateProject();
 
-  const { developerRoles, description, name } = createProjectState;
+  const { developerRoles, description, name, tags } = createProjectState;
   const hasDeveloperRoles = isArrayValue(developerRoles);
 
   return (
@@ -109,6 +109,7 @@ export const ProjectPreview: FC<IProjectPreviewProps> = ({ children }) => {
             variables: {
               input: {
                 title: name ?? 'placeholder name',
+                tags,
                 description: description ?? 'placholder description',
                 developerRoles,
               },

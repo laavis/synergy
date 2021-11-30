@@ -16,6 +16,7 @@ const StyledProjects = styled.section`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  word-break: break-all;
 
   > :first-child {
     margin-bottom: 1rem;

@@ -16,8 +16,10 @@ import {
   CREATE_PROJECT_PATH,
   PROFILE_PATH,
   PROJECTS_PATH,
+  PROJECT_DETAILS_PATH,
 } from './constants/paths';
 import { CreateProject } from './pages/CreateProject';
+import { ProjectDetails } from './pages/ProjectDetails';
 
 const StyledApp = styled.div`
   display: flex;
@@ -59,6 +61,7 @@ export const App: FC = () => {
           <Route exact path={PROJECTS_PATH} component={Projects} />
           <Route exact path={PROFILE_PATH} component={Profile} />
           <Route exact path={CREATE_PROJECT_PATH} component={CreateProject} />
+          <Route exact path={PROJECT_DETAILS_PATH} component={ProjectDetails} />
         </Switch>
       </StyledApp>
     </AuthProvider>

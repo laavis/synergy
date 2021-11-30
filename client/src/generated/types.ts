@@ -20,7 +20,6 @@ export type CreateProjectInput = {
   description: Scalars['String'];
   developerRoles: Array<DeveloperRoleInput>;
   kickoffDate?: Maybe<Scalars['String']>;
-  otherRoles?: Maybe<Array<OtherRoleInput>>;
   tags?: Maybe<Array<Scalars['String']>>;
   title: Scalars['String'];
 };
@@ -31,7 +30,7 @@ export type DeveloperRole = {
   language: Scalars['String'];
   maxAssignees?: Maybe<Scalars['Int']>;
   skillLevel: Scalars['Int'];
-  technologies?: Maybe<Array<Scalars['String']>>;
+  technologies: Array<Scalars['String']>;
   type: ERole;
 };
 
@@ -40,22 +39,18 @@ export type DeveloperRoleInput = {
   language: Scalars['String'];
   maxAssignees?: Maybe<Scalars['Int']>;
   skillLevel: Scalars['Int'];
-  technologies?: Maybe<Array<Scalars['String']>>;
+  technologies: Array<Scalars['String']>;
   type: ERole;
 };
 
 export enum ERole {
   BackendDeveloper = 'backend_developer',
-  Designer = 'designer',
   FrontendDeveloper = 'frontend_developer',
-  FullstackDeveloper = 'fullstack_developer',
-  Other = 'other'
+  FullstackDeveloper = 'fullstack_developer'
 }
 
 export enum ESkillType {
-  Design = 'design',
   Framework = 'framework',
-  Other = 'other',
   Programming = 'programming'
 }
 
@@ -115,25 +110,6 @@ export type MutationUpdateUserArgs = {
   input?: Maybe<UpdateUserInput>;
 };
 
-export type OtherRole = {
-  __typename?: 'OtherRole';
-  description?: Maybe<Scalars['String']>;
-  maxAssignees?: Maybe<Scalars['Int']>;
-  name: Scalars['String'];
-  skillLevel: Scalars['Int'];
-  technologies?: Maybe<Array<Scalars['String']>>;
-  type: ERole;
-};
-
-export type OtherRoleInput = {
-  description?: Maybe<Scalars['String']>;
-  maxAssignees?: Maybe<Scalars['Int']>;
-  name: Scalars['String'];
-  skillLevel: Scalars['Int'];
-  technologies?: Maybe<Array<Scalars['String']>>;
-  type: ERole;
-};
-
 export type Project = {
   __typename?: 'Project';
   _id: Scalars['ID'];
@@ -142,7 +118,6 @@ export type Project = {
   developerRoles: Array<DeveloperRole>;
   kickoffDate?: Maybe<Scalars['String']>;
   members?: Maybe<Array<Scalars['ID']>>;
-  otherRoles?: Maybe<Array<OtherRole>>;
   tags?: Maybe<Array<Scalars['String']>>;
   title: Scalars['String'];
 };
@@ -150,7 +125,7 @@ export type Project = {
 export type Query = {
   __typename?: 'Query';
   helloWorld: Scalars['String'];
-  me?: Maybe<Me>;
+  me: Me;
   projects?: Maybe<Array<Maybe<Project>>>;
   renewAccessToken?: Maybe<AccessToken>;
   user?: Maybe<User>;
