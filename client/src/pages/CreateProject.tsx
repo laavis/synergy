@@ -1,13 +1,10 @@
-import { gql, useMutation } from '@apollo/client';
-import React, { FC, SyntheticEvent, useEffect, useState } from 'react';
+import React, { FC, SyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
-import { Button } from '../components/Button';
 import { Form } from '../components/Form';
 import { Input } from '../components/Input';
 import { Layout } from '../components/Layout';
 import { Heading2 } from '../components/Text';
-import { ERole, MutationCreateProjectArgs } from '../generated/types';
-import { useUser } from '../util/AuthProvider';
+import { ERole } from '../generated/types';
 import { Dropdown } from '../components/Dropdown';
 import { DeveloperRoleForm } from '../components/DeveloperRoleForm';
 import { ProjectPreview } from '../components/ProjectPreview';
@@ -54,7 +51,7 @@ export interface ICreateProjectProps {}
 const isDevRole = (role: string) =>
   Object.values(ERole).includes(role as ERole);
 
-export const CreateProject: FC<ICreateProjectProps> = ({}) => {
+export const CreateProject: FC<ICreateProjectProps> = () => {
   const state = useCreateProjectState(state => state);
   const { setName, setDescription } = state;
 

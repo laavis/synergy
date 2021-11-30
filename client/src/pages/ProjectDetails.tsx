@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Project } from '../generated/types';
 
 const StyledProjectDetails = styled.div`
   width: 100%;

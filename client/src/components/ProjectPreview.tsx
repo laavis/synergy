@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useCreateProject } from '../hooks/useCreateProject';
 import { useCreateProjectState } from '../state';
@@ -7,7 +7,7 @@ import { TSkillLevel } from '../types';
 import { roleNameMap, skillLevelNameMap } from '../util';
 import { Button } from './Button';
 import { getRandomTagColor, Tag, Tags } from './Tag';
-import { Body, Heading3, Heading4, SmallText } from './Text';
+import { Body, Heading3, Heading4 } from './Text';
 
 const StyledProjectPreview = styled.div`
   ${cardBaseStyles}
@@ -43,11 +43,6 @@ const FlexRow = styled.div`
   > :first-child {
     margin-right: 0.3rem;
   }
-`;
-
-const FlexColumn = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 const isArrayValue = (array: any[]) =>

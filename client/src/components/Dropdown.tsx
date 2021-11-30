@@ -1,7 +1,4 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import styled from 'styled-components';
-
-const StyledDropdown = styled.div``;
 
 export interface IDropdownProps {
   dropdownItems: string[];

@@ -13,7 +13,7 @@ export const useCreateProject = () => {
     }
   `;
 
-  const [createProject, { loading, data, error }] = useMutation<
+  const [createProject, { loading, data }] = useMutation<
     CreateProjectInput,
     MutationCreateProjectArgs
   >(CREATE_PROJECT);

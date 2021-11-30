@@ -12,7 +12,9 @@ import {
 
 import { App } from './App';
 
-const httpLink = new HttpLink({ uri: 'http://localhost:3000/graphql' });
+const httpLink = new HttpLink({
+  uri: process.env.REACT_APP_API_URL || 'http://localhost:3000/graphql',
+});
 const authMiddleware = new ApolloLink((request, forward) => {
   const token = sessionStorage.getItem('access-token');
 
