@@ -26,7 +26,6 @@ const StyledCreateProject = styled.section`
   width: 100%;
   max-width: 60rem;
   padding-top: 4rem;
-  margin-left: 14rem;
   box-sizing: border-box;
   align-self: flex-start;
   margin: 0 auto;

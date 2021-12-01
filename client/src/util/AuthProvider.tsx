@@ -67,7 +67,6 @@ export const useAuthContext = (): IAuthContext => {
       // todo redirect user to login page
       // todo remove tokens from storage?
       if (!refreshToken || !isValidRefeshToken) {
-        console.log('no tokens');
         history.push('/login');
         return;
       }

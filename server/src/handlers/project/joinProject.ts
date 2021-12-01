@@ -2,8 +2,6 @@ import { ProjectModel } from '../../models/Project';
 import { IContext } from '../../types';
 
 export const joinProject = async (projectId: string, ctx: IContext) => {
-  console.log('HALOO');
-  console.log(ctx.user);
   try {
     await ProjectModel.findByIdAndUpdate(
       { _id: projectId },
@@ -21,7 +19,6 @@ export const joinProject = async (projectId: string, ctx: IContext) => {
     );
     return true;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };

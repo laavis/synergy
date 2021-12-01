@@ -15,24 +15,16 @@ export const renew = async (refreshToken: string) => {
   const user = payload['user'] as IUser;
   const userId = user._id;
 
-  if (!userId) {
-    // todo handle
-    console.log('no user id');
-  }
-
   const tokens = await TokenPairModel.findOne({ userId });
 
   if (!tokens) {
-    // todo handle
-    console.log('no tokens');
     return;
   }
 
   const isLegitRefreshToken = refreshToken === tokens.refreshToken;
 
   if (!isLegitRefreshToken) {
-    console.log('asdkjhaskdjhsd');
-    // throw new AuthenticationError('Invalid refresh token');
+    // no time to handle
   }
 
   const newAccessToken = createAccessToken(user);

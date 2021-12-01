@@ -34,6 +34,9 @@ const resolverMap: IResolvers = {
     async projects(_: void, args: void, ctx) {
       return ProjectModel.find({});
     },
+    async project(_: void, args: { projectId: string }, ctx) {
+      return ProjectModel.findById({ _id: args.projectId });
+    },
   },
   Mutation: {
     async createUser(

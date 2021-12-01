@@ -21,9 +21,7 @@ export const useLogout = () => {
       sessionStorage.clear();
       history.push(LOGIN_PATH);
       window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }, [logoutMutation, history]);
 
   return { logout };

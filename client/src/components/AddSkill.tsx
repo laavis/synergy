@@ -22,7 +22,7 @@ const StyledAddSkill = styled.div`
   }
 `;
 
-const Asd = styled.div`
+const InputWrapper = styled.div`
   position: relative;
 `;
 
@@ -92,12 +92,11 @@ export const AddSkill: FC<IAddSkillProps> = ({ ...restProps }) => {
 
   const addSkill = async () => {
     if (!value || !skillLevel || !skillType) {
-      console.log('fill all pls');
       return;
     }
 
     try {
-      const result = await updateUser({
+      await updateUser({
         variables: {
           input: {
             skills: [
@@ -110,11 +109,7 @@ export const AddSkill: FC<IAddSkillProps> = ({ ...restProps }) => {
           },
         },
       });
-
-      console.log({ result });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -140,7 +135,7 @@ export const AddSkill: FC<IAddSkillProps> = ({ ...restProps }) => {
         ))}
       </select>
       {skillType === 'Programming' && (
-        <Asd>
+        <InputWrapper>
           <Input
             value={value}
             label='Language'
@@ -148,7 +143,7 @@ export const AddSkill: FC<IAddSkillProps> = ({ ...restProps }) => {
             ref={inputRef}
           />
           {value !== bestMatch && <Suggestion>{bestMatch}</Suggestion>}
-        </Asd>
+        </InputWrapper>
       )}
       {skillType && (
         <>

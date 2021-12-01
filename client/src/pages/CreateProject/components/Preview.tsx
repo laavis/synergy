@@ -16,7 +16,7 @@ const StyledPreview = styled.div`
   }
 `;
 
-const DeveloperRolePreview = styled.div`
+export const DeveloperRolePreview = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -38,7 +38,7 @@ const DeveloperRolePreview = styled.div`
   }
 `;
 
-const FlexRow = styled.div`
+export const FlexRow = styled.div`
   display: flex;
   align-items: baseline;
 

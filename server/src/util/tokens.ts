@@ -58,8 +58,6 @@ export const validateAccessToken = async (req: any) => {
     const user = await UserModel.findById({ _id: userId });
     return user;
   } catch (error) {
-    console.log(error);
-
     return null;
   }
 };

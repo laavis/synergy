@@ -1,4 +1,8 @@
-import { PROFILE_PATH, PROJECTS_PATH } from '../../constants/paths';
+import {
+  CREATE_PROJECT_PATH,
+  PROFILE_PATH,
+  PROJECTS_PATH,
+} from '../../constants/paths';
 
 export interface INavItem {
   to: string;
@@ -13,5 +17,9 @@ export const navItems: INavItem[] = [
   {
     to: PROFILE_PATH,
     name: 'Profile',
+  },
+  {
+    to: CREATE_PROJECT_PATH,
+    name: 'Create project',
   },
 ];

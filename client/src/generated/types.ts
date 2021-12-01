@@ -132,10 +132,16 @@ export type Query = {
   __typename?: 'Query';
   helloWorld: Scalars['String'];
   me?: Maybe<Me>;
+  project?: Maybe<Project>;
   projects?: Maybe<Array<Maybe<Project>>>;
   renewAccessToken?: Maybe<AccessToken>;
   user?: Maybe<User>;
   users?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type QueryProjectArgs = {
+  projectId: Scalars['ID'];
 };
 
 

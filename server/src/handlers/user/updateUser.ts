@@ -23,7 +23,6 @@ export interface IUpdateUserInput {
 
 export const updateUser = async (input: IUpdateUserInput, ctx: IContext) => {
   const { skills, ...userDetails } = input;
-  console.log(skills?.map(skill => typeof skill.type));
 
   try {
     const user = await UserModel.findByIdAndUpdate(
@@ -41,8 +40,5 @@ export const updateUser = async (input: IUpdateUserInput, ctx: IContext) => {
     );
 
     return user;
-  } catch (error) {
-    // todo handle
-    console.error(error);
-  }
+  } catch (error) {}
 };

@@ -78,9 +78,7 @@ export const CreateAccount: FC = () => {
           password,
         },
       });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const handleChange = (e: SyntheticEvent, key: TNewUserField) => {

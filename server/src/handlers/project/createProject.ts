@@ -29,7 +29,5 @@ export const createProject = async (
     });
 
     return newProject;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };

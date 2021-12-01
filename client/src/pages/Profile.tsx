@@ -6,13 +6,13 @@ import { Form } from '../components/Form';
 import { Layout } from '../components/Layout';
 import { Body, Heading2, Heading4, SmallTextStrong } from '../components/Text';
 import { User } from '../generated/types';
+import { useUser } from '../util/AuthProvider';
 
 const StyledProfile = styled.section`
   width: 100%;
   max-width: 60rem;
   margin: 0 auto;
   padding-top: 4rem;
-  margin-left: 14rem;
   box-sizing: border-box;
   > :first-child {
     margin-bottom: 1rem;
@@ -51,7 +51,9 @@ const useProfile = (userId: string) => {
 };
 
 export const Profile: FC = () => {
-  const { user, loading } = useProfile('617826384d7c8a75310bd037');
+  const { user: authUser } = useUser();
+
+  const { user, loading } = useProfile(authUser?._id ?? '');
 
   return (
     <StyledProfile>

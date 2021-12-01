@@ -7,16 +7,15 @@ import { AuthProvider, useAuthContext, useUser } from './util/AuthProvider';
 import { baseBodyStyles } from './components/Text';
 
 import { CreateAccount } from './pages/CreateAccount';
-import { HelloWorld } from './pages/HelloWorld';
 import { LogIn } from './pages/LogIn';
 import { Navigation } from './components/Navigation/Navigation';
 import { Projects } from './pages/projects/Projects';
 import { Profile } from './pages/Profile';
 import {
   CREATE_PROJECT_PATH,
+  LOGIN_PATH,
   PROFILE_PATH,
   PROJECTS_PATH,
-  PROJECT_DETAILS_PATH,
 } from './constants/paths';
 import { CreateProject } from './pages/CreateProject/CreateProject';
 import { ProjectDetails } from './pages/ProjectDetails';
@@ -50,19 +49,21 @@ export const App: FC = () => {
         <GlobalStyle />
         <Switch>
           <Route exact path='/'>
-            {!isAuthenticated && <Redirect to='/login' />}
+            {!isAuthenticated && <Redirect to={LOGIN_PATH} />}
           </Route>
           <Route
             exact
-            path='/login'
+            path={LOGIN_PATH}
             render={routeProps => <LogIn {...routeProps} />}
           />
           <Route exact path='/create-account' component={CreateAccount} />
-          <Route exact path='/hello-world' component={HelloWorld} />
           <Route exact path={PROJECTS_PATH} component={Projects} />
           <Route exact path={PROFILE_PATH} component={Profile} />
           <Route exact path={CREATE_PROJECT_PATH} component={CreateProject} />
-          <Route exact path={PROJECT_DETAILS_PATH} component={ProjectDetails} />
+          <Route
+            path={`${PROJECTS_PATH}/:projectId`}
+            component={ProjectDetails}
+          />
         </Switch>
       </StyledApp>
     </AuthProvider>

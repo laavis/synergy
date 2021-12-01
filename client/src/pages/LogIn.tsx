@@ -61,7 +61,6 @@ export const LogIn: FC<ILogIn> = ({ history }) => {
           <Button
             type='submit'
             onClick={() => {
-              console.log(email, password);
               login({
                 variables: {
                   email,

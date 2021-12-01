@@ -57,5 +57,6 @@ export const projectTypeDefs = gql`
 
   extend type Query {
     projects: [Project]
+    project(projectId: ID!): Project
   }
 `;
