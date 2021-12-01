@@ -59,8 +59,7 @@ export const Body = styled.div<{ $dimmed?: boolean; $faded?: boolean }>`
 
 export const SmallText = styled.div<{ $dimmed?: boolean }>`
   ${baseBodyStyles};
-  font-size: 0.813rem;
-  font-size: 14px;
+  font-size: 0.875rem;
 
   ${({ $dimmed }) =>
     $dimmed &&
@@ -70,7 +69,7 @@ export const SmallText = styled.div<{ $dimmed?: boolean }>`
 `;
 
 export const SmallTextStrong = styled(SmallText)`
-  font-weight: medium;
+  font-weight: bold;
 `;
 
 export const TextLink = styled(Link)`

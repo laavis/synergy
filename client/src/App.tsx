@@ -18,7 +18,7 @@ import {
   PROJECTS_PATH,
   PROJECT_DETAILS_PATH,
 } from './constants/paths';
-import { CreateProject } from './pages/CreateProject';
+import { CreateProject } from './pages/CreateProject/CreateProject';
 import { ProjectDetails } from './pages/ProjectDetails';
 
 const StyledApp = styled.div`

@@ -5,7 +5,7 @@ import {
   prop,
   Severity,
 } from '@typegoose/typegoose';
-import { IDeveloperRole } from '../types';
+import { IDeveloperRole, IProjectMember } from '../types';
 
 @modelOptions({
   schemaOptions: { collection: 'projects' },
@@ -26,14 +26,11 @@ export class Project {
   @prop({ required: true })
   developerRoles!: IDeveloperRole[];
 
-  @prop()
-  tags?: string[];
+  @prop({ required: true })
+  tags!: string[];
 
-  @prop()
-  members?: mongoose.Types.ObjectId[];
-
-  @prop()
-  kickoffDate?: string;
+  @prop({ required: true })
+  members!: IProjectMember[];
 }
 
 export interface IProject extends Project {}

@@ -1,11 +1,4 @@
 import styled from 'styled-components';
-import { tagColors } from '../styles/tagColors';
-
-export const getRandomTagColor = () => {
-  const randomIndex = Math.floor(Math.random() * tagColors.length);
-
-  return tagColors[randomIndex];
-};
 
 export const Tag = styled.span<{ $color?: string }>`
   display: flex;
@@ -15,10 +8,17 @@ export const Tag = styled.span<{ $color?: string }>`
   background-color: ${props => props.$color || '#c7d9fc'};
   padding: 0 0.25rem;
   border-radius: 0.125rem;
+  font-size: 0.875rem;
 `;
 
 export const Tags = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  margin-top: -0.5rem;
+
+  > span {
+    margin-top: 0.5rem;
+  }
 
   > :not(:last-child) {
     margin-right: 0.5rem;

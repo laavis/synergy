@@ -36,10 +36,13 @@ const useProjects = () => {
       projects {
         _id
         title
-        kickoffDate
         description
         tags
-        members
+        members {
+          userId
+          firstName
+          lastName
+        }
         developerRoles {
           type
           language
@@ -51,27 +54,32 @@ const useProjects = () => {
 
   const { data, loading } = useQuery(GET_PROJECTS);
 
-  const projects = data?.projects;
+  const projects = data?.projects as Project[];
 
   return { projects, loading };
 };
 
 export const Projects: FC = () => {
   const { projects, loading } = useProjects();
+  const hasProjects = projects && projects.length > 0;
 
   return (
     <StyledProjects>
       <LinkButton to={CREATE_PROJECT_PATH} $color='#8674fb'>
         + Create project
       </LinkButton>
-      {!loading ? (
-        <ProjectsGrid>
-          {projects.map((project: Project) => (
-            <ProjectCard project={project} />
-          ))}
-        </ProjectsGrid>
-      ) : (
+      {loading ? (
         <Heading3>loading</Heading3>
+      ) : (
+        <>
+          {hasProjects && (
+            <ProjectsGrid>
+              {projects.map((project: Project) => (
+                <ProjectCard project={project} />
+              ))}
+            </ProjectsGrid>
+          )}
+        </>
       )}
     </StyledProjects>
   );

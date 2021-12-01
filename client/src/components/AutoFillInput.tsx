@@ -65,7 +65,7 @@ export const AutoFillInput: FC<IAutoFillInputProps> = ({
       <Input
         value={value}
         ref={inputRef}
-        label='Language'
+        label='Language*'
         onChange={e => handleChange(e)}
       />
       {value !== bestMatch && <BestMatch>{bestMatch}</BestMatch>}

@@ -1,24 +1,18 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { useCreateProject } from '../hooks/useCreateProject';
-import { useCreateProjectState } from '../state';
-import { cardBaseStyles } from '../styles/baseStyles';
-import { TSkillLevel } from '../types';
-import { roleNameMap, skillLevelNameMap } from '../util';
-import { Button } from './Button';
-import { getRandomTagColor, Tag, Tags } from './Tag';
-import { Body, Heading3, Heading4 } from './Text';
 
-const StyledProjectPreview = styled.div`
+import { Tag, Tags } from '../../../components/Tag';
+import { Body, Heading3, Heading4, SmallText } from '../../../components/Text';
+import { useCreateProjectState } from '../../../state';
+import { cardBaseStyles } from '../../../styles/baseStyles';
+import { TSkillLevel } from '../../../types';
+import { roleNameMap, skillLevelNameMap } from '../../../util';
+
+const StyledPreview = styled.div`
   ${cardBaseStyles}
 
   > :not(:last-child) {
     margin-bottom: 1rem;
-  }
-
-  > :last-child {
-    margin-top: auto;
-    align-self: flex-end;
   }
 `;
 
@@ -26,6 +20,14 @@ const DeveloperRolePreview = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  position: relative;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  transition: background-color 160ms ease-in-out;
+
+  :hover {
+    background-color: #f3f3f5;
+  }
 
   > :not(:last-child) {
     margin-bottom: 0.25rem;
@@ -45,25 +47,42 @@ const FlexRow = styled.div`
   }
 `;
 
+const DeleteRoleButton = styled(SmallText)`
+  margin-left: auto;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  color: #e31837;
+  cursor: pointer;
+`;
+
 const isArrayValue = (array: any[]) =>
   array !== undefined && array !== null && array.length > 0;
 
-export interface IProjectPreviewProps {}
+export interface IPreviewProps {}
 
-export const ProjectPreview: FC<IProjectPreviewProps> = ({ children }) => {
+export const Preview: FC<IPreviewProps> = ({ children }) => {
   const createProjectState = useCreateProjectState(state => state);
-  const { createProject } = useCreateProject();
 
-  const { developerRoles, description, name, tags } = createProjectState;
+  const { developerRoles, description, name, tags, removeDeveloperRole } =
+    createProjectState;
   const hasDeveloperRoles = isArrayValue(developerRoles);
 
   return (
-    <StyledProjectPreview>
-      {children}
+    <StyledPreview>
       {name ? (
         <Heading3>{name}</Heading3>
       ) : (
         <Heading3 $faded>Project name</Heading3>
+      )}
+      {tags ? (
+        <Tags>
+          {tags.map(tag => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+        </Tags>
+      ) : (
+        <Body $faded>Tags</Body>
       )}
       {description ? (
         <Body $dimmed>{description}</Body>
@@ -82,7 +101,7 @@ export const ProjectPreview: FC<IProjectPreviewProps> = ({ children }) => {
               <Body $dimmed>Technologies: </Body>
               <Tags>
                 {devRole.technologies?.map(tech => (
-                  <Tag $color={getRandomTagColor()}>{tech}</Tag>
+                  <Tag $color='#C7D9FC'>{tech}</Tag>
                 ))}
               </Tags>
             </FlexRow>
@@ -96,26 +115,11 @@ export const ProjectPreview: FC<IProjectPreviewProps> = ({ children }) => {
               <Body $dimmed>Description: </Body>
               <Body>{devRole.description}</Body>
             </FlexRow>
+            <DeleteRoleButton onClick={() => removeDeveloperRole(devRole)}>
+              Remove
+            </DeleteRoleButton>
           </DeveloperRolePreview>
         ))}
-      <Button
-        onClick={() =>
-          createProject({
-            variables: {
-              input: {
-                title: name ?? 'placeholder name',
-                tags,
-                description: description ?? 'placholder description',
-                developerRoles,
-              },
-            },
-          })
-        }
-        // $disabled
-        $color='#8674fb'
-      >
-        Create
-      </Button>
-    </StyledProjectPreview>
+    </StyledPreview>
   );
 };

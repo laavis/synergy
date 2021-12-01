@@ -22,19 +22,13 @@ const FooterIdk = styled.div`
   }
 `;
 
-interface ICredentials {
-  email?: string;
-  password?: string;
-}
-
 interface ILogIn extends RouteComponentProps {}
 
 export const LogIn: FC<ILogIn> = ({ history }) => {
   const { isAuthenticated } = useUser();
-  const [credentials, setCredentials] = useState<ICredentials>({
-    email: 'sara@synergy.com',
-    password: 'asd',
-  });
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { login, loading } = useLogin();
 
   useEffect(() => {
@@ -50,33 +44,31 @@ export const LogIn: FC<ILogIn> = ({ history }) => {
         <Form>
           <Input
             type='email'
-            label='email'
-            defaultValue={credentials.email}
+            label='Email'
+            defaultValue={email}
             onChange={(e: SyntheticEvent) =>
-              setCredentials({
-                email: (e.currentTarget as HTMLInputElement).value,
-              })
+              setEmail((e.currentTarget as HTMLInputElement).value)
             }
           />
           <Input
             type='password'
-            label='password'
-            defaultValue={credentials.password}
+            label='Password'
+            defaultValue={password}
             onChange={(e: SyntheticEvent) =>
-              setCredentials({
-                password: (e.currentTarget as HTMLInputElement).value,
-              })
+              setPassword((e.currentTarget as HTMLInputElement).value)
             }
           />
           <Button
-            onClick={() =>
+            type='submit'
+            onClick={() => {
+              console.log(email, password);
               login({
                 variables: {
-                  email: credentials?.email,
-                  password: credentials?.password,
+                  email,
+                  password,
                 },
-              })
-            }
+              });
+            }}
           >
             {loading ? 'loading' : 'Log In'}
           </Button>

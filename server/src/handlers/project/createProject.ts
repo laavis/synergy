@@ -18,6 +18,13 @@ export const createProject = async (
 
     const newProject = await ProjectModel.create({
       createdBy,
+      members: [
+        {
+          userId: ctx.user._id,
+          firstName: ctx.user.firstName,
+          lastName: ctx.user.lastName,
+        },
+      ],
       ...input,
     });
 

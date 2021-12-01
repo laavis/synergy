@@ -10,7 +10,12 @@ import { Range } from './Range';
 import { Textarea } from './Textarea';
 import { useCreateProjectState } from '../state';
 
-const StyledDeveloperRoleForm = styled.div``;
+const StyledDeveloperRoleForm = styled.div`
+  > :last-child {
+    margin-left: auto;
+    margin-top: 1rem;
+  }
+`;
 
 export interface IDeveloperRoleFormProps {
   devType: ERole;
@@ -54,7 +59,7 @@ export const DeveloperRoleForm: FC<IDeveloperRoleFormProps> = ({ devType }) => {
         possibleValues={languages}
       />
       <Input
-        label='Technologies (comma separated)'
+        label='Technologies (comma separated)*'
         onChange={(e: SyntheticEvent) =>
           setTechnologies((e.target as HTMLInputElement).value)
         }
@@ -65,7 +70,7 @@ export const DeveloperRoleForm: FC<IDeveloperRoleFormProps> = ({ devType }) => {
         range={{ min: 1, max: 5 }}
       />
       <Textarea
-        label='Description'
+        label='Description*'
         onChange={(e: SyntheticEvent) =>
           setDescription((e.target as HTMLTextAreaElement).value)
         }

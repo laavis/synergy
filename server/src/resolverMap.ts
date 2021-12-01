@@ -5,6 +5,7 @@ import {
   createProject,
   ICreateProjectInput,
 } from './handlers/project/createProject';
+import { joinProject } from './handlers/project/joinProject';
 import { ILoginUserInput } from './handlers/user/login';
 import { IUpdateUserInput, updateUser } from './handlers/user/updateUser';
 import { ProjectModel } from './models/Project';
@@ -61,20 +62,7 @@ const resolverMap: IResolvers = {
       return await createProject(args.input, ctx);
     },
     async joinProject(_: void, args: { projectId: string }, ctx: IContext) {
-      try {
-        await ProjectModel.findByIdAndUpdate(
-          { _id: args.projectId },
-          {
-            $push: {
-              members: [ctx.user._id],
-            },
-          }
-        );
-        return true;
-      } catch (error) {
-        console.log(error);
-        return false;
-      }
+      return await joinProject(args.projectId, ctx);
     },
   },
 };

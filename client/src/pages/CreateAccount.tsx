@@ -46,11 +46,11 @@ type TNewUserField = keyof INewUser;
 
 export const CreateAccount: FC = () => {
   const [newUser, setNewUser] = useState<INewUser>({
-    email: 'test@synergy.com',
-    password: 'test',
-    rePassword: 'test',
-    firstName: 'Test',
-    lastName: 'Synergy',
+    email: '',
+    password: '',
+    rePassword: '',
+    firstName: '',
+    lastName: '',
   });
   const { createAccount, loading, error } = useCreateAccount();
 

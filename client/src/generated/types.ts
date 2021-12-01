@@ -19,8 +19,7 @@ export type AccessToken = {
 export type CreateProjectInput = {
   description: Scalars['String'];
   developerRoles: Array<DeveloperRoleInput>;
-  kickoffDate?: Maybe<Scalars['String']>;
-  tags?: Maybe<Array<Scalars['String']>>;
+  tags: Array<Scalars['String']>;
   title: Scalars['String'];
 };
 
@@ -35,7 +34,7 @@ export type DeveloperRole = {
 };
 
 export type DeveloperRoleInput = {
-  description?: Maybe<Scalars['String']>;
+  description: Scalars['String'];
   language: Scalars['String'];
   maxAssignees?: Maybe<Scalars['Int']>;
   skillLevel: Scalars['Int'];
@@ -116,16 +115,22 @@ export type Project = {
   createdBy: Scalars['ID'];
   description: Scalars['String'];
   developerRoles: Array<DeveloperRole>;
-  kickoffDate?: Maybe<Scalars['String']>;
-  members?: Maybe<Array<Scalars['ID']>>;
-  tags?: Maybe<Array<Scalars['String']>>;
+  members: Array<ProjectMember>;
+  tags: Array<Scalars['String']>;
   title: Scalars['String'];
+};
+
+export type ProjectMember = {
+  __typename?: 'ProjectMember';
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  userId: Scalars['ID'];
 };
 
 export type Query = {
   __typename?: 'Query';
   helloWorld: Scalars['String'];
-  me: Me;
+  me?: Maybe<Me>;
   projects?: Maybe<Array<Maybe<Project>>>;
   renewAccessToken?: Maybe<AccessToken>;
   user?: Maybe<User>;

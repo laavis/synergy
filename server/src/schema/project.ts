@@ -20,32 +20,34 @@ export const projectTypeDefs = gql`
     skillLevel: Int!
     language: String!
     technologies: [String!]!
-    description: String
+    description: String!
     maxAssignees: Int
   }
+
+
+  type ProjectMember {
+    userId: ID!
+    firstName: String!
+    lastName: String!
+  }
+
 
   type Project {
     _id: ID!
     title: String!
-    # User's id who has created the project
     createdBy: ID!
-    # Date when project has been set to start
-    kickoffDate: String
-    # Detailed description of the project
     description: String!
-    # Stack used for the project, e.g. Node.js, React, TypeScript
-    tags: [String!]
+    tags: [String!]!
     developerRoles: [DeveloperRole!]!
-    members: [ID!]
+    members: [ProjectMember!]!
   }
 
 
   input CreateProjectInput {
     title: String!
     description: String!
-    tags: [String!]
+    tags: [String!]!
     developerRoles: [DeveloperRoleInput!]!
-    kickoffDate: String
   }
 
   extend type Mutation {

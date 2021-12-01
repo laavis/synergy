@@ -24,4 +24,10 @@ export interface IDeveloperRole {
   maxAssignees?: number;
 }
 
+export interface IProjectMember {
+  userId: string;
+  firstName: string;
+  lastName: string;
+}
+
 export type TSkillLevel = 1 | 2 | 3 | 4 | 5;

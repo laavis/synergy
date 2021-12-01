@@ -5,8 +5,12 @@ import { gql, useMutation } from '@apollo/client';
 import { Button } from '../../../components/Button';
 import { Body, Heading3, SmallText } from '../../../components/Text';
 import { theme } from '../../../styles/theme';
-import { MutationJoinProjectArgs, Project } from '../../../generated/types';
-import { getRandomTagColor, Tag } from '../../../components/Tag';
+import {
+  MutationJoinProjectArgs,
+  Project,
+  ProjectMember,
+} from '../../../generated/types';
+import { Tag } from '../../../components/Tag';
 import { cardBaseStyles } from '../../../styles/baseStyles';
 import { useUser } from '../../../util/AuthProvider';
 
@@ -48,13 +52,28 @@ const ProjectCardFooter = styled.div`
   justify-content: space-between;
 `;
 
-const Participants = styled.div``;
+const Members = styled.div`
+  display: flex;
+`;
 
-const Idk = styled.div`
+const Member = styled.div<{ $margin: number }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 100%;
-  background-color: #c4c4c4;
+  background-color: #f3b7ae;
+  border: 0.125rem solid white;
+  margin-left: -${props => props.$margin}rem;
+  z-index: ${props => props.$margin};
+
+  > div {
+    margin-right: -2px;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    opacity: 0.7;
+  }
 `;
 
 const useJoinProject = () => {
@@ -85,8 +104,16 @@ const useJoinProject = () => {
   return { joinProject };
 };
 
-const hasAlreadyJoinedProject = (userId: string, projectMembers: string[]) => {
-  return projectMembers.includes(userId);
+const getInitials = (firstName: string, lastName: string) =>
+  `${firstName.substr(0, 1)}${lastName.substr(0, 1)}`;
+
+const hasAlreadyJoinedProject = (
+  userId: string,
+  projectMembers: ProjectMember[]
+): boolean => {
+  console.log({ userId });
+  console.log(projectMembers);
+  return projectMembers.find(member => member.userId === userId) ? true : false;
 };
 
 export const ProjectCard: FC<{ project: Project }> = ({ project }) => {
@@ -97,9 +124,13 @@ export const ProjectCard: FC<{ project: Project }> = ({ project }) => {
   const { user } = useUser();
   const userId = user?._id;
 
-  const idk = userId ? hasAlreadyJoinedProject(userId, members ?? []) : false;
+  const alreadyJoinedProject = userId
+    ? hasAlreadyJoinedProject(userId, members ?? [])
+    : false;
 
-  console.log({ idk });
+  const membersCopy = members.concat();
+  const membersToRender =
+    membersCopy.length > 5 ? membersCopy.splice(0, 5) : membersCopy;
 
   const { joinProject } = useJoinProject();
 
@@ -110,7 +141,7 @@ export const ProjectCard: FC<{ project: Project }> = ({ project }) => {
         {hasTags && (
           <Tags>
             {tags.map(tech => (
-              <Tag $color={getRandomTagColor()}>
+              <Tag>
                 <SmallText>{tech}</SmallText>
               </Tag>
             ))}
@@ -120,13 +151,20 @@ export const ProjectCard: FC<{ project: Project }> = ({ project }) => {
       <Description>{project.description}</Description>
       <ProjectCardFooter>
         {hasMembers && (
-          <Participants>
-            {members?.map(index => (
-              <Idk key={index}></Idk>
+          <Members>
+            {membersToRender?.map((member, index) => (
+              <Member $margin={index} key={member.userId}>
+                <SmallText>
+                  {getInitials(member.firstName, member.lastName)}
+                </SmallText>
+              </Member>
             ))}
-          </Participants>
+          </Members>
         )}
-        <Button $disabled={idk} onClick={() => joinProject(project._id)}>
+        <Button
+          $disabled={alreadyJoinedProject}
+          onClick={() => joinProject(project._id)}
+        >
           Join
         </Button>
       </ProjectCardFooter>
