@@ -12,7 +12,6 @@ const StyledProjects = styled.section`
   max-width: 60rem;
   margin: 0 auto;
   padding-top: 4rem;
-  margin-left: 14rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

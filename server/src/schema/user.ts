@@ -56,5 +56,6 @@ export const userTypeDefs = gql`
     ): User
     updateUser(input: UpdateUserInput): User
     login(email: String!, password: String!): Tokens
+    logout: Boolean
   }
 `;

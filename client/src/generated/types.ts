@@ -76,6 +76,7 @@ export type Mutation = {
   createUser?: Maybe<User>;
   joinProject: Scalars['Boolean'];
   login?: Maybe<Tokens>;
+  logout?: Maybe<Scalars['Boolean']>;
   updateUser?: Maybe<User>;
 };
 
