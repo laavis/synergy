@@ -16,6 +16,7 @@ export const useCreateAccount = () => {
         firstName: $firstName
         lastName: $lastName
       ) {
+        _id
         firstName
         lastName
       }

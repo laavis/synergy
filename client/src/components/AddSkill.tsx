@@ -73,12 +73,9 @@ export const AddSkill: FC<IAddSkillProps> = ({ ...restProps }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [skillLevel, setSkillLevel] = useState(1);
   const [bestMatch, setBestMatch] = useState<string>();
-  const [skillType, setSkillType] = useState<string>();
   const [value, setValue] = useState<string>();
 
   const { updateUser } = useUpdateUser();
-
-  const skillTypes = Object.keys(ESkillType) as ESkillType[];
 
   const handleChange = (e: SyntheticEvent) => {
     const value = (e.currentTarget as HTMLInputElement).value;
@@ -91,7 +88,7 @@ export const AddSkill: FC<IAddSkillProps> = ({ ...restProps }) => {
   };
 
   const addSkill = async () => {
-    if (!value || !skillLevel || !skillType) {
+    if (!value || !skillLevel) {
       return;
     }
 
@@ -101,7 +98,7 @@ export const AddSkill: FC<IAddSkillProps> = ({ ...restProps }) => {
           input: {
             skills: [
               {
-                type: skillType.toLowerCase() as ESkillType,
+                type: ESkillType.Programming,
                 level: skillLevel,
                 name: value,
               },
@@ -126,41 +123,29 @@ export const AddSkill: FC<IAddSkillProps> = ({ ...restProps }) => {
 
   return (
     <StyledAddSkill {...restProps}>
-      <select name='Skill Type' onChange={e => setSkillType(e.target.value)}>
-        <option selected disabled hidden>
-          Choose skill type
-        </option>
-        {skillTypes.map(skillType => (
-          <option value={skillType}>{skillType}</option>
-        ))}
-      </select>
-      {skillType === 'Programming' && (
-        <InputWrapper>
-          <Input
-            value={value}
-            label='Language'
-            onChange={e => handleChange(e)}
-            ref={inputRef}
+      <InputWrapper>
+        <Input
+          value={value}
+          label='Language'
+          onChange={e => handleChange(e)}
+          ref={inputRef}
+        />
+        {value !== bestMatch && <Suggestion>{bestMatch}</Suggestion>}
+      </InputWrapper>
+      <>
+        <SliderWrapper>
+          <input
+            value={skillLevel}
+            type='range'
+            min={1}
+            max={5}
+            id='myRange'
+            onChange={e => setSkillLevel(parseInt(e.target.value))}
           />
-          {value !== bestMatch && <Suggestion>{bestMatch}</Suggestion>}
-        </InputWrapper>
-      )}
-      {skillType && (
-        <>
-          <SliderWrapper>
-            <input
-              value={skillLevel}
-              type='range'
-              min={1}
-              max={5}
-              id='myRange'
-              onChange={e => setSkillLevel(parseInt(e.target.value))}
-            />
-          </SliderWrapper>
-          <Textarea placeholder='Description' />
-        </>
-      )}
-      <Button onClick={addSkill}>Add</Button>
+        </SliderWrapper>
+        <Textarea placeholder='Description' />
+      </>
+      <Button onClick={() => addSkill()}>Add</Button>
     </StyledAddSkill>
   );
 };

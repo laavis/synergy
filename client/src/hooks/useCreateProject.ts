@@ -8,6 +8,7 @@ export const useCreateProject = () => {
   const CREATE_PROJECT = gql`
     mutation CreateProject($input: CreateProjectInput!) {
       createProject(input: $input) {
+        _id
         title
       }
     }

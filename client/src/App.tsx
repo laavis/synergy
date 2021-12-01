@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
 import { AuthProvider, useAuthContext, useUser } from './util/AuthProvider';
@@ -12,6 +12,7 @@ import { Navigation } from './components/Navigation/Navigation';
 import { Projects } from './pages/projects/Projects';
 import { Profile } from './pages/Profile';
 import {
+  CREATE_ACCOUNT_PATH,
   CREATE_PROJECT_PATH,
   LOGIN_PATH,
   PROFILE_PATH,
@@ -42,10 +43,16 @@ export const App: FC = () => {
   const authState = useAuthContext();
   const { isAuthenticated } = useUser();
 
+  const location = useLocation();
+
+  const showNav =
+    location.pathname !== LOGIN_PATH &&
+    location.pathname !== CREATE_ACCOUNT_PATH;
+
   return (
     <AuthProvider value={authState}>
       <StyledApp>
-        {isAuthenticated && <Navigation />}
+        {showNav && <Navigation />}
         <GlobalStyle />
         <Switch>
           <Route exact path='/'>

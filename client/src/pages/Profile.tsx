@@ -32,6 +32,7 @@ const useProfile = (userId: string) => {
   const GET_USER = gql`
     query GetUser($userId: ID!) {
       user(userId: $userId) {
+        _id
         firstName
         lastName
         bio
